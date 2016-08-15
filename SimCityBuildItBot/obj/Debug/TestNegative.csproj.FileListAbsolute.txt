@@ -1,0 +1,73 @@
+c:\users\jp\documents\visual studio 2015\Projects\TestNegative\TestNegative\bin\Debug\TestNegative.exe.config
+c:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\TestNegative.exe
+c:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\TestNegative.pdb
+c:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.csprojResolveAssemblyReference.cache
+c:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.Form1.resources
+c:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.Properties.Resources.resources
+c:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.csproj.GenerateResource.Cache
+c:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.exe
+c:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.pdb
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\tessdata\configs\bazzar
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.cube.bigrams
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.cube.fold
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.cube.lm
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.cube.nn
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.cube.params
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.cube.size
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.cube.word-freq
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.tesseract_cube.nn
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.traineddata
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.user-patterns
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.user-words
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\x64\liblept172.dll
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\x64\libtesseract304.dll
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\x86\liblept172.dll
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\x86\libtesseract304.dll
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\Tesseract.dll
+C:\Users\jp\Documents\Visual Studio 2015\Projects\TestNegative\TestNegative\bin\Debug\Tesseract.xml
+F:\Projects\TestNegative\TestNegative\bin\Debug\TestNegative.exe.config
+F:\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.exe
+F:\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.pdb
+F:\Projects\TestNegative\TestNegative\bin\Debug\tessdata\configs\bazzar
+F:\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.cube.bigrams
+F:\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.cube.fold
+F:\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.cube.lm
+F:\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.cube.nn
+F:\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.cube.params
+F:\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.cube.size
+F:\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.cube.word-freq
+F:\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.tesseract_cube.nn
+F:\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.traineddata
+F:\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.user-patterns
+F:\Projects\TestNegative\TestNegative\bin\Debug\tessdata\eng.user-words
+F:\Projects\TestNegative\TestNegative\bin\Debug\x64\liblept172.dll
+F:\Projects\TestNegative\TestNegative\bin\Debug\x64\libtesseract304.dll
+F:\Projects\TestNegative\TestNegative\bin\Debug\x86\liblept172.dll
+F:\Projects\TestNegative\TestNegative\bin\Debug\x86\libtesseract304.dll
+F:\Projects\TestNegative\TestNegative\bin\Debug\TestNegative.exe
+F:\Projects\TestNegative\TestNegative\bin\Debug\TestNegative.pdb
+F:\Projects\TestNegative\TestNegative\bin\Debug\Tesseract.dll
+F:\Projects\TestNegative\TestNegative\bin\Debug\Tesseract.xml
+F:\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.csprojResolveAssemblyReference.cache
+F:\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.Form1.resources
+F:\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.Properties.Resources.resources
+F:\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.csproj.GenerateResource.Cache
+F:\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.ScreenCaptureDesigner.resources
+F:\Projects\TestNegative\TestNegative\bin\Debug\Camalot.Common.dll
+F:\Projects\TestNegative\TestNegative\bin\Debug\Managed.Adb.dll
+F:\Projects\TestNegative\TestNegative\bin\Debug\MoreLinq.dll
+F:\Projects\TestNegative\TestNegative\bin\Debug\Newtonsoft.Json.dll
+F:\Projects\TestNegative\TestNegative\bin\Debug\Managed.Adb.pdb
+F:\Projects\TestNegative\TestNegative\bin\Debug\Managed.Adb.xml
+F:\Projects\TestNegative\TestNegative\bin\Debug\MoreLinq.xml
+F:\Projects\TestNegative\TestNegative\bin\Debug\Newtonsoft.Json.xml
+F:\Projects\TestNegative\TestNegative\bin\Debug\Common.Logging.Core.dll
+F:\Projects\TestNegative\TestNegative\bin\Debug\Common.Logging.dll
+F:\Projects\TestNegative\TestNegative\bin\Debug\Common.Logging.pdb
+F:\Projects\TestNegative\TestNegative\bin\Debug\Common.Logging.xml
+F:\Projects\TestNegative\TestNegative\bin\Debug\Common.Logging.Core.pdb
+F:\Projects\TestNegative\TestNegative\bin\Debug\Common.Logging.Core.xml
+F:\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.TestForm.resources
+F:\Projects\TestNegative\TestNegative\bin\Debug\SimplePaletteQuantizer.exe
+F:\Projects\TestNegative\TestNegative\bin\Debug\SimplePaletteQuantizer.pdb
+F:\Projects\TestNegative\TestNegative\obj\Debug\TestNegative.ResourceReaderDesigner.resources
