@@ -28,9 +28,8 @@ The basic iterations between the bot and the game are:
 
 ### Bot Demo
 
-<iframe allowfullscreen="" frameborder="0" height="270" src="https://www.youtube.com/embed/OOk6HWBdy6U" width="480"></iframe>
+[YouTube Video](https://www.youtube.com/watch?v=OOk6HWBdy6U)
 
-https://www.youtube.com/embed/OOk6HWBdy6U
 ----------
 
 ### Bot Detail
