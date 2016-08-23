@@ -38,6 +38,18 @@
                 case Location.Resources3_Position3: return new Point(430, 420);
 
                 case Location.Resources1_Position1: return new Point(270, 420);
+
+                case Location.GlobalTradeMiddleRight: return new Point(1540, 560);
+                case Location.GlobalTradeMiddleLeft: return new Point(447, 570);
+
+                case Location.GlobalTradeRefresh: return new Point(962, 954);
+
+                case Location.HomeButton: return new Point(91, 111);
+                case Location.GlobalTrade: return new Point(550, 500);
+                case Location.GlobalTradeOk: return new Point(962, 900);
+
+                case Location.GlobalTradeOtherCity: return new Point(1700, 1040);
+
             }
 
             throw new Exception("Unknown location!");
@@ -89,5 +101,15 @@
         Resources3_Position3,
 
         Resources1_Position1,
+
+        GlobalTradeMiddleRight,
+        GlobalTradeMiddleLeft,
+        GlobalTradeRefresh,
+        GlobalTradeOk,
+
+        HomeButton,
+        GlobalTrade,
+        GlobalTradeOtherCity
+
     }
 }

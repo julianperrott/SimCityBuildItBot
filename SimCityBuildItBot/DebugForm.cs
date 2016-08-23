@@ -105,5 +105,10 @@
         {
             new ResourceReaderDesigner().ShowDialog();
         }
+
+        private void btnTradeDepot_Click(object sender, EventArgs e)
+        {
+            new TradeDepot().ShowDialog();
+        }
     }
 }

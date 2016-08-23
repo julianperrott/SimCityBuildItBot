@@ -33,6 +33,7 @@
             this.txtRequiredItems = new System.Windows.Forms.TextBox();
             this.txtRequired = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnBuy = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtLog
@@ -86,11 +87,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // btnBuy
+            // 
+            this.btnBuy.Location = new System.Drawing.Point(220, 12);
+            this.btnBuy.Name = "btnBuy";
+            this.btnBuy.Size = new System.Drawing.Size(98, 65);
+            this.btnBuy.TabIndex = 21;
+            this.btnBuy.Text = "Buy";
+            this.btnBuy.UseVisualStyleBackColor = true;
+            this.btnBuy.Click += new System.EventHandler(this.btnBuy_Click);
+            // 
             // BotForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(885, 795);
+            this.Controls.Add(this.btnBuy);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtRequired);
             this.Controls.Add(this.txtRequiredItems);
@@ -109,5 +121,6 @@
         private System.Windows.Forms.TextBox txtRequiredItems;
         private System.Windows.Forms.TextBox txtRequired;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnBuy;
     }
 }

@@ -17,6 +17,7 @@ namespace SimCityBuildItBot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new BotForm());
+            //Application.Run(new TradeDepot());
         }
     }
 }

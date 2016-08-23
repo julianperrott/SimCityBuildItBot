@@ -51,6 +51,11 @@
 
             //this.MoveTo(point);
 
+            ClickAt(point);
+        }
+
+        public void ClickAt(Point point)
+        {
             this.TouchDown();
             this.MoveTo(point);
 
@@ -60,12 +65,17 @@
             System.Threading.Thread.Sleep(1000);
         }
 
-        public void Swipe(Location downAt, Location from, Location to, int steps, bool isDrop)
+        public void Swipe(Location downAt, Location from, Location to, int steps, bool touchUpAtTouchDownLocation)
         {
             var pointdownAt = Constants.GetPoint(downAt);
             var pointFrom = Constants.GetPoint(from);
             var pointTo = Constants.GetPoint(to);
 
+            Swipe(pointdownAt, pointFrom, pointTo, steps, touchUpAtTouchDownLocation);
+        }
+
+        public void Swipe(Point pointdownAt, Point pointFrom, Point pointTo, int steps, bool touchUpAtTouchDownLocation)
+        {
             var xStep = (pointTo.X - pointFrom.X) / steps;
             var yStep = (pointTo.Y - pointFrom.Y) / steps;
 
@@ -83,7 +93,7 @@
                 this.MoveTo(pointFrom);
             }
 
-            if (!isDrop)
+            if (!touchUpAtTouchDownLocation)
             {
                 this.MoveTo(pointdownAt);
             }

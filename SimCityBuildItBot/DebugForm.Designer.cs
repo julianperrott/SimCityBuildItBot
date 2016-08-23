@@ -46,6 +46,7 @@
             this.btnCaptureDesigner = new System.Windows.Forms.Button();
             this.btnTest = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.btnTradeDepot = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -195,11 +196,22 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // Form1
+            // btnTradeDepot
+            // 
+            this.btnTradeDepot.Location = new System.Drawing.Point(720, 3);
+            this.btnTradeDepot.Name = "btnTradeDepot";
+            this.btnTradeDepot.Size = new System.Drawing.Size(112, 23);
+            this.btnTradeDepot.TabIndex = 16;
+            this.btnTradeDepot.Text = "Trade Depot";
+            this.btnTradeDepot.UseVisualStyleBackColor = true;
+            this.btnTradeDepot.Click += new System.EventHandler(this.btnTradeDepot_Click);
+            // 
+            // DebugForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1311, 810);
+            this.Controls.Add(this.btnTradeDepot);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.btnCaptureDesigner);
@@ -216,7 +228,7 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button1);
-            this.Name = "Form1";
+            this.Name = "DebugForm";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -245,6 +257,7 @@
         private System.Windows.Forms.Button btnCaptureDesigner;
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnTradeDepot;
     }
 }
 

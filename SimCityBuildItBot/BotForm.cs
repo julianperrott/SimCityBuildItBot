@@ -137,7 +137,8 @@
                     touch.ClickAt(Bot.Location.RightButton);
                     BuildFactoryItem(slowItem);
                     touch.ClickAt(Bot.Location.RightButton);
-                    BuildFactoryItem(slowItem);
+
+                    BuildFactoryItem(FactoryResource.SugarAndSpices);
                     touch.ClickAt(Bot.Location.RightButton);
                     BuildFactoryItemIfNeeded(FactoryResource.Seeds, requiredResources);
                     touch.ClickAt(Bot.Location.RightButton);
@@ -199,6 +200,11 @@
         private void button1_Click(object sender, EventArgs e)
         {
             new DebugForm().ShowDialog();
+        }
+
+        private void btnBuy_Click(object sender, EventArgs e)
+        {
+            new TradeDepot().ShowDialog();
         }
     }
 }
