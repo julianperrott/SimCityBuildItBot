@@ -84,7 +84,7 @@
             var images = resourceLocations.Select(resourceLocation =>
             {
                 var capturePoint = Constants.GetPoint(resourceLocation);
-                return captureScreen.SnapShot("MEmu", capturePoint.X + resourceLocationOffset.X, capturePoint.Y + resourceLocationOffset.Y, new Size(70, 35));
+                return captureScreen.SnapShot(capturePoint.X + resourceLocationOffset.X, capturePoint.Y + resourceLocationOffset.Y, new Size(70, 35));
             }).ToList();
 
             touch.TouchUp();

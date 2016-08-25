@@ -101,9 +101,18 @@
     <Compile Include="Bot\Constants.cs" />
     <Compile Include="Bot\FactoryResource.cs" />
     <Compile Include="Bot\LogToText.cs" />
+    <Compile Include="Bot\MemuChooser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bot\MemuChooser.Designer.cs">
+      <DependentUpon>MemuChooser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bot\NavigateToBuilding.cs" />
+    <Compile Include="Bot\PanelLocation.cs" />
     <Compile Include="Bot\ResourceReader.cs" />
     <Compile Include="Bot\CaptureScreen.cs" />
+    <Compile Include="Bot\TradePanelCapture.cs" />
+    <Compile Include="Bot\TradeWindow.cs" />
     <Compile Include="DebugForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,6 +154,9 @@
     <Compile Include="TradeDepot.Designer.cs">
       <DependentUpon>TradeDepot.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Bot\MemuChooser.resx">
+      <DependentUpon>MemuChooser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DebugForm.resx">
       <DependentUpon>DebugForm.cs</DependentUpon>
     </EmbeddedResource>

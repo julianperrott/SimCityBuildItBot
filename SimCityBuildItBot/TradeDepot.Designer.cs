@@ -66,6 +66,7 @@
             this.tb8 = new System.Windows.Forms.TextBox();
             this.btnClickPanelTrade = new System.Windows.Forms.Button();
             this.cbDebug = new System.Windows.Forms.CheckBox();
+            this.txtLog = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb1)).BeginInit();
@@ -113,7 +114,7 @@
             this.pictureBoxAll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pictureBoxAll.Location = new System.Drawing.Point(12, 265);
             this.pictureBoxAll.Name = "pictureBoxAll";
-            this.pictureBoxAll.Size = new System.Drawing.Size(1133, 448);
+            this.pictureBoxAll.Size = new System.Drawing.Size(1138, 448);
             this.pictureBoxAll.TabIndex = 10;
             this.pictureBoxAll.TabStop = false;
             // 
@@ -409,11 +410,20 @@
             this.cbDebug.Text = "Debug";
             this.cbDebug.UseVisualStyleBackColor = true;
             // 
+            // txtLog
+            // 
+            this.txtLog.Location = new System.Drawing.Point(963, 122);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.Size = new System.Drawing.Size(190, 137);
+            this.txtLog.TabIndex = 44;
+            // 
             // TradeDepot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1157, 725);
+            this.ClientSize = new System.Drawing.Size(1162, 725);
+            this.Controls.Add(this.txtLog);
             this.Controls.Add(this.cbDebug);
             this.Controls.Add(this.btnClickPanelTrade);
             this.Controls.Add(this.tb8);
@@ -504,5 +514,6 @@
         private System.Windows.Forms.TextBox tb8;
         private System.Windows.Forms.Button btnClickPanelTrade;
         private System.Windows.Forms.CheckBox cbDebug;
+        private System.Windows.Forms.TextBox txtLog;
     }
 }

@@ -28,13 +28,13 @@ namespace SimCityBuildItBot.Bot
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindowRect(IntPtr hWnd, ref Rect rect);
 
-        public Bitmap SnapShot(string procName, int x, int y, Size size)
+        public Bitmap SnapShot(int x, int y, Size size)
         {
-            Process proc = GetProcessByName(procName);
+            Process proc = MemuChooser.GetMemuProcess();
             if (proc == null)
             {
-                System.Diagnostics.Debug.WriteLine("Can't find process: " + procName);
-                log.Debug("Can't find process: " + procName);
+                System.Diagnostics.Debug.WriteLine("Can't find process: ");
+                log.Debug("Can't find process: ");
                 return null;
             }
 
@@ -45,12 +45,12 @@ namespace SimCityBuildItBot.Bot
 
             if ((rect.bottom - rect.top) != 1080)
             {
-                log.Debug("height of window must be 1080: " + procName);
+                log.Debug("height of window must be 1080, it is "+(rect.bottom - rect.top));
             }
 
             if ((rect.right - rect.left) != 1920)
             {
-                log.Debug("width of window must be 1920: " + procName);
+                log.Debug("width of window must be 1920, it is "+( rect.right - rect.left));
             }
 
             // sometimes it gives error.
@@ -63,18 +63,6 @@ namespace SimCityBuildItBot.Bot
             Graphics.FromImage(bmp).CopyFromScreen(rect.left + x, rect.top + y, 0, 0, size, CopyPixelOperation.SourceCopy);
 
             return bmp;
-        }
-
-        private static Process GetProcessByName(string procName)
-        {
-            try
-            {
-                return Process.GetProcessesByName(procName)[0];
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return null;
-            }
         }
     }
 }

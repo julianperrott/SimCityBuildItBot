@@ -204,6 +204,7 @@
 
         private void btnBuy_Click(object sender, EventArgs e)
         {
+            this.Hide();
             new TradeDepot().ShowDialog();
         }
     }

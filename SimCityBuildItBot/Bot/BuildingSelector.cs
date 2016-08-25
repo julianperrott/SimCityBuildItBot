@@ -51,19 +51,19 @@
             return building;
         }
 
-        public Bitmap SnapShotBuildingTitle(string procName)
+        public Bitmap SnapShotBuildingTitle()
         {
-            return screen.SnapShot(procName, 660, 120, new Size(550, 70));
+            return screen.SnapShot( 660, 120, new Size(550, 70));
         }
 
-        public Bitmap SnapShotTradeDepotTitle(string procName)
+        public Bitmap SnapShotTradeDepotTitle()
         {
-            return screen.SnapShot(procName, 410, 90, new Size(400, 70));
+            return screen.SnapShot( 410, 90, new Size(400, 70));
         }
 
         public BuildingMatch GetBuilding()
         {
-            var bitmap = SnapShotBuildingTitle("MEmu");
+            var bitmap = SnapShotBuildingTitle();
 
             if (bitmap == null)
             {

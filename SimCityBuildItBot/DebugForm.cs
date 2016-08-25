@@ -55,24 +55,24 @@
             }
         }
 
-        public Bitmap SnapShotBuildingTitle(string procName)
+        public Bitmap SnapShotBuildingTitle()
         {
-            return captureScreen.SnapShot(procName, 660, 120, new Size(550, 70));
+            return captureScreen.SnapShot(660, 120, new Size(550, 70));
         }
 
-        public Bitmap SnapShotTradeDepotTitle(string procName)
+        public Bitmap SnapShotTradeDepotTitle()
         {
-            return captureScreen.SnapShot(procName, 410, 90, new Size(400, 70));
+            return captureScreen.SnapShot( 410, 90, new Size(400, 70));
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
-                ShowBitmap(SnapShotBuildingTitle("MEmu"), this.pictureBox1, this.pictureBox1Text);
-                ShowBitmap(SnapShotTradeDepotTitle("MEmu"), this.pictureBox2, this.pictureBox2Text);
+                ShowBitmap(SnapShotBuildingTitle(), this.pictureBox1, this.pictureBox1Text);
+                ShowBitmap(SnapShotTradeDepotTitle(), this.pictureBox2, this.pictureBox2Text);
 
-                var userDefinedImage = captureScreen.SnapShot("MEmu", int.Parse(txtX.Text), int.Parse(txtY.Text), new Size(int.Parse(txtWidth.Text), int.Parse(txtHeight.Text)));
+                var userDefinedImage = captureScreen.SnapShot(int.Parse(txtX.Text), int.Parse(txtY.Text), new Size(int.Parse(txtWidth.Text), int.Parse(txtHeight.Text)));
                 ShowBitmap(userDefinedImage, this.pictureBox3, this.pictureBox3Text);
             }
             catch (Exception ex)

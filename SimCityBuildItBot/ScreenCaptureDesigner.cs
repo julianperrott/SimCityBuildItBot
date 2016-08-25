@@ -29,7 +29,7 @@ namespace SimCityBuildItBot
 
                 this.Text = x + "," + y + ", (" + s.Width + "," + s.Height + ")";
 
-                var image = captureScreen.SnapShot("MEmu", x, y, s);
+                var image = captureScreen.SnapShot(x, y, s);
                 if (this.cbNegative.Checked)
                 {
                     image = image.TurnNegative();

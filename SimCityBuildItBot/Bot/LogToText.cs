@@ -86,7 +86,7 @@
 
         public void Debug(object message)
         {
-            throw new NotImplementedException();
+            Info(message);
         }
 
         public void Debug(Action<FormatMessageHandler> formatMessageCallback, Exception exception)

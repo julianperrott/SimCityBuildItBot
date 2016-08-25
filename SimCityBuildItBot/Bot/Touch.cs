@@ -14,8 +14,8 @@
         public Touch(ILog log)
         {
             this.log = log;
-            List<Device> devices = AdbHelper.Instance.GetDevices(AndroidDebugBridge.SocketAddress);
-            device = devices[0];
+            
+            device = MemuChooser.GetDevice();
         }
 
         public void TouchDown()
