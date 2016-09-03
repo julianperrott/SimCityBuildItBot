@@ -4,6 +4,7 @@
     using Managed.Adb;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Windows.Forms;
 
     public class Touch
     {
@@ -51,7 +52,24 @@
 
             //this.MoveTo(point);
 
+            System.Diagnostics.Debug.WriteLine("Clicking " + location.ToString());
+
             ClickAt(point);
+        }
+
+        public void LongPress(Location location, int seconds)
+        {
+            var point = Constants.GetPoint(location);
+
+            this.TouchDown();
+            this.MoveTo(point);
+
+            BotApplication.Wait(seconds * 1000);
+
+            this.TouchUp();
+            this.EndTouchData();
+
+            BotApplication.Wait(1000);
         }
 
         public void ClickAt(Point point)
@@ -62,7 +80,7 @@
             this.TouchUp();
             this.EndTouchData();
 
-            System.Threading.Thread.Sleep(1000);
+            BotApplication.Wait(1000);
         }
 
         public void Swipe(Location downAt, Location from, Location to, int steps, bool touchUpAtTouchDownLocation)
@@ -82,9 +100,9 @@
             //log.Info("Swiping from" + from.ToString() + " to " + to.ToString());
             TouchDown();
             this.MoveTo(pointdownAt);
-            System.Threading.Thread.Sleep(300);
+            BotApplication.Wait(300);
             this.MoveTo(pointFrom);
-            System.Threading.Thread.Sleep(300);
+            BotApplication.Wait(300);
 
             for (int i = 0; i < steps; i++)
             {
@@ -98,10 +116,10 @@
                 this.MoveTo(pointdownAt);
             }
 
-            System.Threading.Thread.Sleep(500);
+            BotApplication.Wait(500);
             TouchUp();
             EndTouchData();
-            System.Threading.Thread.Sleep(500);
+            BotApplication.Wait(500);
         }
     }
 }

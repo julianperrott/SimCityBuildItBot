@@ -18,17 +18,32 @@ namespace SimCityBuildItBot
         private CaptureScreen captureScreen;
         private Touch touch;
         private TradeWindow tradeWindow;
+        private TradePanelCapture tradePanelCapture;
+        private ItemHashes itemHashes;
+        private NavigateToBuilding navigateToBuilding;
+        private BuildingSelector buildingSelector;
+        private Salesman salesman;
 
-        private List<PictureBox> pictureBoxes = new List<PictureBox>();
-        private List<TextBox> textBoxes = new List<TextBox>();
+        private static Pen purplePen = new Pen(Color.Purple, 1);
+        private static Pen redPen = new Pen(Color.Red, 2);
+        private static Pen greenPen = new Pen(Color.Green, 2);
 
         public TradeDepot()
         {
             InitializeComponent();
-            captureScreen = new CaptureScreen(new NoOpLogger());
-            touch = new Touch(new NoOpLogger());
-            tradeWindow = new TradeWindow(captureScreen, new LogToText(this.txtLog, this));
+            var log = new LogToText(this.txtLog, this);
+
+            captureScreen = new CaptureScreen(log);
+            touch = new Touch(log);
+            tradeWindow = new TradeWindow(captureScreen, log);
+            tradePanelCapture = new TradePanelCapture(tradeWindow);
+            buildingSelector = new BuildingSelector(log, touch);
+            navigateToBuilding = new NavigateToBuilding(log, touch, buildingSelector, tradeWindow);
+
             tradeWindow.PictureBox = this.pictureBox1;
+
+            var pictureBoxes = new List<PictureBox>();
+            var textBoxes = new List<TextBox>();
 
             pictureBoxes.Add(this.pb1);
             pictureBoxes.Add(this.pb2);
@@ -47,17 +62,21 @@ namespace SimCityBuildItBot
             textBoxes.Add(this.tb6);
             textBoxes.Add(this.tb7);
             textBoxes.Add(this.tb8);
+
+            itemHashes = new ItemHashes(pictureBoxes, textBoxes);
+            itemHashes.ReadHashes();
+            salesman = new Salesman(touch, tradeWindow, tradePanelCapture, itemHashes, navigateToBuilding);
         }
 
         private void btnCaptureImages_Click(object sender, EventArgs e)
         {
             try
             {
-                var image = this.tradeWindow.CaptureTradeWindow(captureScreen);
+                var image = this.tradeWindow.CaptureTradeWindow();
 
                 List<int> tops = GetGlobalTradeTops(image);
 
-                var locs = FindPanelStartsGlobalTrade(image, tops);
+                var locs = tradePanelCapture.FindPanelStartsGlobalTrade(image, tops);
 
                 using (var graphics = Graphics.FromImage(image))
                 {
@@ -90,112 +109,36 @@ namespace SimCityBuildItBot
 
             if (this.cbFindTops.Checked)
             {
-                tops = FindTopsOfPanel(image, redRangeGlobalTrade, greenRangeGlobalTrade, blueRangeGlobalTrade);
+                tops = tradePanelCapture.FindTopsOfPanelGlobalTrade(image);
             }
 
             return tops;
         }
 
-        private Tuple<byte, byte> redRangeGlobalTrade = new Tuple<byte, byte>(60, 90);
-        private Tuple<byte, byte> greenRangeGlobalTrade = new Tuple<byte, byte>(175, 201);
-        private Tuple<byte, byte> blueRangeGlobalTrade = new Tuple<byte, byte>(200, 230);
-
-        private Tuple<byte, byte> redRangeTradeDepot = new Tuple<byte, byte>(245, 255);
-        private Tuple<byte, byte> greenRangeTradeDepot = new Tuple<byte, byte>(225, 240);
-        private Tuple<byte, byte> blueRangeTradeDepot = new Tuple<byte, byte>(185, 210);
-
-        private Pen redPen = new Pen(Color.Red, 2);
-        private Pen greenPen = new Pen(Color.Green, 2);
-
-        public static bool InRange(byte value, Tuple<byte, byte> range)
-        {
-            return value >= range.Item1 && value <= range.Item2;
-        }
-
-        private List<PanelLocation> FindPanelStartsTradeDepot(Bitmap image, List<int> tops)
-        {
-            return FindPanelStarts(image, tops, redRangeTradeDepot, greenRangeTradeDepot, blueRangeTradeDepot);
-        }
-
-        private List<PanelLocation> FindPanelStartsGlobalTrade(Bitmap image, List<int> tops)
-        {
-            return FindPanelStarts(image, tops, redRangeGlobalTrade, greenRangeGlobalTrade, blueRangeGlobalTrade);
-        }
-
-        private List<PanelLocation> FindPanelStarts(Bitmap image, List<int> tops, Tuple<byte, byte> redRange, Tuple<byte, byte> greenRange, Tuple<byte, byte> blueRange)
-        {
-            var result = new List<PanelLocation>();
-            int lastFoundX = 0;
-
-            tops.ForEach(y =>
-            {
-                PanelLocation current = null;
-
-                for (int x = 1; x < image.Width; x++)
-                {
-                    var p = image.GetPixel(x, y);
-                    if (InRange(p.R, redRange) && InRange(p.G, greenRange) && InRange(p.B, blueRange))
-                    {
-                        lastFoundX = x;
-
-                        if (cbDebug.Checked)
-                        {
-                            using (var graphics = Graphics.FromImage(image))
-                            {
-                                graphics.DrawLine(greenPen, x, y, x + 1, y);
-                            }
-                        }
-
-                        if (current == null)
-                        {
-                            current = new PanelLocation { Start = new Point(x, y) };
-                        }
-                    }
-                    else
-                    {
-                        if (current != null)
-                        {
-                            int width = x - current.Start.X;
-                            if (width > 180)
-                            {
-                                current.Width = width;
-                                result.Add(current);
-                                lastFoundX = 0;
-                                current = null;
-                            }
-                            else
-                            {
-                                if (x - lastFoundX > 5)
-                                {
-                                    current = null;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            return result;
-        }
-
         private void btnCrop_Click(object sender, EventArgs e)
         {
-            string subPath = CreateFolder("CropTest");
+            var path = "CropTest";
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
             var panels = CaptureImagesGlobalTrade();
             panels.ForEach(panel =>
             {
                 ImageViewer.ShowBitmap(panel.CroppedImage, this.pictureBoxAll);
-                panel.CroppedImage.Save(subPath + @"\" + Guid.NewGuid().ToString() + ".png", ImageFormat.Png);
+                panel.CroppedImage.Save(path + @"\" + Guid.NewGuid().ToString() + ".png", ImageFormat.Png);
             });
         }
 
         public List<PanelLocation> CaptureImagesGlobalTrade()
         {
-            var image = this.tradeWindow.CaptureTradeWindow(captureScreen);
+            var image = this.tradeWindow.CaptureTradeWindow();
 
             List<int> tops = GetGlobalTradeTops(image);
 
-            var locs = FindPanelStartsGlobalTrade(image, tops);
+            var locs = tradePanelCapture.FindPanelStartsGlobalTrade(image, tops);
 
             locs.ForEach(p =>
             {
@@ -204,16 +147,6 @@ namespace SimCityBuildItBot
             });
 
             return locs;
-        }
-
-        private static string CreateFolder(string subPath)
-        {
-            if (!Directory.Exists(subPath))
-            {
-                Directory.CreateDirectory(subPath);
-            }
-
-            return subPath;
         }
 
         private static Bitmap cropImage(Bitmap bmpImage, Rectangle cropArea)
@@ -226,68 +159,42 @@ namespace SimCityBuildItBot
             touch.Swipe(Bot.Location.GlobalTradeMiddleRight, Bot.Location.GlobalTradeMiddleRight, Bot.Location.GlobalTradeMiddleLeft, swipeSteps, false);
         }
 
-        private long folderNumber = 1;
-
         private void btnStartCapture_Click(object sender, EventArgs e)
         {
             this.tradeWindow.StopCapture = false;
 
-            string subPath = CreateFolder("Capture");
-
-            Dictionary<ulong, string> hashes = ReadHashes(subPath);
+            itemHashes.ReadHashes();
 
             while (!this.tradeWindow.StopCapture)
             {
                 touch.ClickAt(Bot.Location.GlobalTradeRefresh);
-                Sleep(1);
+                WaitForSeconds(1);
 
                 while (CaptureImagesGlobalTrade().Count == 0)
                 {
                     this.Text = "Waiting for new images";
                     touch.ClickAt(Bot.Location.GlobalTradeRefresh);
-                    Sleep(1);
+                    WaitForSeconds(1);
                 }
 
-                var panels = ProcessCaptureImages(subPath, hashes, CaptureImagesGlobalTrade());
+                var panels = itemHashes.ProcessCaptureImages(CaptureImagesGlobalTrade());
                 buyIfMatchFound(panels);
 
                 touch.Swipe(Bot.Location.GlobalTradeMiddleRight, Bot.Location.GlobalTradeMiddleRight, Bot.Location.GlobalTradeMiddleLeft, swipeSteps, true);
-                Sleep(1);
+                WaitForSeconds(1);
 
-                panels = ProcessCaptureImages(subPath, hashes, CaptureImagesGlobalTrade());
+                panels = itemHashes.ProcessCaptureImages(CaptureImagesGlobalTrade());
                 buyIfMatchFound(panels);
 
                 touch.Swipe(Bot.Location.GlobalTradeMiddleRight, Bot.Location.GlobalTradeMiddleRight, Bot.Location.GlobalTradeMiddleLeft, swipeSteps, true);
-                Sleep(1);
+                WaitForSeconds(1);
 
-                panels = ProcessCaptureImages(subPath, hashes, CaptureImagesGlobalTrade());
+                panels = itemHashes.ProcessCaptureImages(CaptureImagesGlobalTrade());
                 buyIfMatchFound(panels);
-                Sleep(1);
+                WaitForSeconds(1);
 
-                WaitFor(this.tradeWindow.IsResetButtonVisible, "Reset Button");
+                WaitFor(this.tradeWindow.IsRefreshGlobalTradeButtonVisible, "Reset Button");
             }
-        }
-
-        private static Dictionary<ulong, string> ReadHashes(string subPath)
-        {
-            var directories = Directory.GetDirectories(subPath);
-
-            var hashes = new Dictionary<ulong, string>();
-
-            // get existing folders
-            directories.ToList().ForEach(dir =>
-            {
-                Directory.GetFiles(dir)
-                .ToList()
-                .ForEach(file =>
-                {
-                    var hash = file.Substring(file.LastIndexOf(@"\") + 1);
-                    hash = hash.Substring(0, hash.Length - 4);
-                    hashes.Add(ulong.Parse(hash), dir);
-                }
-                );
-            });
-            return hashes;
         }
 
         private void buyIfMatchFound(List<PanelLocation> panels)
@@ -312,7 +219,7 @@ namespace SimCityBuildItBot
         // dozer wheel "planks",
         public List<string> DesiredItems = new List<string> { "camera", "vus", "dozer", "exhaust", "blade", "shipswheel", "lifebelt", "scuba", "lock", "bars", "snow", "winter", "compass" };
 
-        public List<string> BuyItems = new List<string> { "camera","wheel", "vus", "exhaust","bars", "lock", "shipswheel", "lifebelt", "scuba" };
+        public List<string> BuyItems = new List<string> { "camera", "wheel", "vus", "exhaust", "bars", "lock", "shipswheel", "lifebelt", "scuba" };
 
         private void WaitFor(Func<bool> wait, string waitingFor)
         {
@@ -330,13 +237,13 @@ namespace SimCityBuildItBot
             {
                 Application.DoEvents();
                 this.Text = text + " - Waitied for" + waitingFor + " for " + ((int)(sw.ElapsedMilliseconds / 1000)) + " seconds";
-                Thread.Sleep(500);
+                Bot.BotApplication.Wait(500);
             }
 
             this.Text = text;
         }
 
-        private void Sleep(int seconds)
+        private void WaitForSeconds(int seconds)
         {
             var text = this.Text;
 
@@ -347,7 +254,7 @@ namespace SimCityBuildItBot
             {
                 Application.DoEvents();
                 this.Text = text + " - Sleeping for " + (seconds - ((int)(sw.ElapsedMilliseconds / 1000))) + " seconds";
-                Thread.Sleep(500);
+                Bot.BotApplication.Wait(100);
             }
 
             this.Text = text;
@@ -358,83 +265,6 @@ namespace SimCityBuildItBot
             Application.DoEvents();
         }
 
-        private List<PanelLocation> ProcessCaptureImages(string subPath, Dictionary<ulong, string> hashes, List<PanelLocation> panels)
-        {
-            var n = -1;
-
-            this.pictureBoxes.ForEach(p =>
-            {
-                p.Visible = false;
-            });
-
-            this.textBoxes.ForEach(t => t.Text = "");
-
-            panels.ForEach(panel =>
-            {
-                n++;
-                ImageViewer.ShowBitmap(panel.CroppedImage, this.pictureBoxes[n]);
-                this.pictureBoxes[n].Visible = true;
-
-                ulong hash = ImageHashing.ImageHashing.AverageHash(panel.CroppedImage);
-                if (!hashes.ContainsKey(hash))
-                {
-                    var bestMatch = hashes.Keys.Where(key => ImageHashing.ImageHashing.Similarity(key, hash) > 90)
-                        .OrderByDescending(key => ImageHashing.ImageHashing.Similarity(key, hash))
-                        .FirstOrDefault();
-
-                    var folder = string.Empty;
-
-                    if (bestMatch == ulong.MinValue)
-                    {
-                        // new unknown image
-                        folder = subPath + @"\F" + this.folderNumber;
-
-                        // create a folder
-                        while (Directory.Exists(folder))
-                        {
-                            folderNumber++;
-                            folder = subPath + @"\F" + this.folderNumber;
-                        }
-
-                        CreateFolder(folder);
-                    }
-                    else
-                    {
-                        // matched image but a new hash
-                        folder = hashes[bestMatch];
-                    }
-
-                    // save the image
-                    var filename = folder + @"\" + hash + ".png";
-
-                    if (!File.Exists(filename))
-                    {
-                        panel.CroppedImage.Save(filename, ImageFormat.Png);
-                    }
-
-                    // add the hash
-                    hashes.Add(hash, folder);
-
-                    this.Text = DateTime.Now.ToLongTimeString() + " - found " + (bestMatch == ulong.MinValue ? "new" : "match") + " " + folder;
-                    ImageViewer.ShowBitmap(panel.CroppedImage, this.pictureBoxAll);
-                    panel.CroppedImage.Dispose();
-                    panel.CroppedImage = null;
-
-                    panel.Item = folder;
-                }
-                else
-                {
-                    panel.Item = hashes[hash];
-                }
-
-                this.textBoxes[n].Text = panel.ItemText;
-            });
-
-            Application.DoEvents();
-
-            return panels;
-        }
-
         private void btnStopCapture_Click(object sender, EventArgs e)
         {
             tradeWindow.StopCapture = true;
@@ -442,16 +272,16 @@ namespace SimCityBuildItBot
 
         private void btnCaptureResetButton_Click(object sender, EventArgs e)
         {
-            this.btnCaptureResetButton.BackColor = this.tradeWindow.IsResetButtonVisible() ? Color.Green : Color.Red;
+            this.btnCaptureResetButton.BackColor = this.tradeWindow.IsRefreshGlobalTradeButtonVisible() ? Color.Green : Color.Red;
         }
 
         private void btnClickPanel_Click(object sender, EventArgs e)
         {
-            var image = this.tradeWindow.CaptureTradeWindow(captureScreen);
+            var image = this.tradeWindow.CaptureTradeWindow();
 
             List<int> tops = GetGlobalTradeTops(image);
 
-            var locs = FindPanelStartsGlobalTrade(image, tops);
+            var locs = tradePanelCapture.FindPanelStartsGlobalTrade(image, tops);
 
             var i = 0;
             if (int.TryParse(this.cboPanel.SelectedItem.ToString(), out i))
@@ -470,21 +300,30 @@ namespace SimCityBuildItBot
 
         private void btnCaptureImagesTradeDepot_Click(object sender, EventArgs e)
         {
+            itemHashes.ReadHashes();
+
             try
             {
-                var image = this.tradeWindow.CaptureTradeWindow(captureScreen);
+                var image = this.tradeWindow.CaptureTradeWindow();
 
                 var tops = GetTradeDepotTops(image);
 
-                var locs = FindPanelStartsTradeDepot(image, tops);
+                var locs = tradePanelCapture.FindPanelStartsTradeDepot(image, tops);
 
                 using (var graphics = Graphics.FromImage(image))
                 {
+                    var drawOnLine = true;
                     locs.ForEach(p =>
                     {
                         for (int j = 0; j < 5; j++)
                         {
                             graphics.DrawLine(redPen, p.Start.X, p.Start.Y - 15 + j, p.Start.X + p.Width, p.Start.Y - 15 + j);
+                        }
+
+                        if (drawOnLine)
+                        {
+                            graphics.DrawLine(purplePen, p.Start.X, p.Start.Y, p.Start.X + p.Width, p.Start.Y);
+                            drawOnLine = false;
                         }
                     });
 
@@ -498,6 +337,8 @@ namespace SimCityBuildItBot
                 }
 
                 ImageViewer.ShowBitmap(image, this.pictureBoxAll);
+
+                var panels = itemHashes.ProcessCaptureImages(CaptureImagesTradeDepot());
             }
             catch (Exception ex)
             {
@@ -511,46 +352,10 @@ namespace SimCityBuildItBot
 
             if (this.cbFindTops.Checked)
             {
-                tops = FindTopsOfPanel(image, redRangeTradeDepot, greenRangeTradeDepot, blueRangeTradeDepot);
+                tops = tradePanelCapture.FindTopsOfPanelTradeDepot(image);
             }
 
             return tops;
-        }
-
-        private List<int> FindTopsOfPanel(Bitmap image, Tuple<byte, byte> redRange, Tuple<byte, byte> greenRange, Tuple<byte, byte> blueRange)
-        {
-            int x1 = 160;
-            var top = -1;
-            var top2 = -1;
-
-            using (var graphics = Graphics.FromImage(image))
-            {
-                for (int y = 50; y < 600; y++)
-                {
-                    var p = image.GetPixel(x1, y);
-                    var pen = greenPen;
-                    if (InRange(p.R, redRange) && InRange(p.G, greenRange) && InRange(p.B, blueRange))
-                    {
-                        if (top == -1)
-                        {
-                            top = y;
-                        }
-                        else
-                        {
-                            if (top2 == -1 && y > top + 330)
-                            {
-                                top2 = y;
-                            }
-                        }
-
-                        pen = redPen;
-                    }
-
-                    graphics.DrawLine(pen, 20, y, 30, y);
-                }
-            }
-
-            return new List<int> { top, top2 };
         }
 
         private int swipeSteps = 10;
@@ -563,9 +368,7 @@ namespace SimCityBuildItBot
 
             tradeWindow.StopCapture = false;
 
-            string subPath = CreateFolder("Capture");
-
-            Dictionary<ulong, string> hashes = ReadHashes(subPath);
+            itemHashes.ReadHashes();
 
             Action waitForNewImages = () =>
             {
@@ -574,11 +377,11 @@ namespace SimCityBuildItBot
                 {
                     n = n + 1;
                     this.Text = "Waiting for new images (" + n + ")";
-                    if (this.tradeWindow.IsResetButtonVisible())
+                    if (this.tradeWindow.IsRefreshGlobalTradeButtonVisible())
                     {
                         touch.ClickAt(Bot.Location.GlobalTradeRefresh);
                     }
-                    Sleep(1);
+                    WaitForSeconds(1);
 
                     if (n == 15)
                     {
@@ -595,15 +398,15 @@ namespace SimCityBuildItBot
             {
                 waitForNewImages();
 
-                PanelLocation desirableItem = ScanGlobalForDesiredItems(subPath, hashes);
+                PanelLocation desirableItem = ScanGlobalForDesiredItems();
 
                 // refresh if no desired item
-                if (desirableItem == null && this.tradeWindow.IsResetButtonVisible())
+                if (desirableItem == null && this.tradeWindow.IsRefreshGlobalTradeButtonVisible())
                 {
                     touch.ClickAt(Bot.Location.GlobalTradeRefresh);
-                    Sleep(1);
+                    WaitForSeconds(1);
                     waitForNewImages();
-                    desirableItem = ScanGlobalForDesiredItems(subPath, hashes);
+                    desirableItem = ScanGlobalForDesiredItems();
                 }
 
                 if (desirableItem != null)
@@ -614,38 +417,38 @@ namespace SimCityBuildItBot
                 else
                 {
                     // click random panel
-                    var globalPanels = ProcessCaptureImages(subPath, hashes, CaptureImagesGlobalTrade());
+                    var globalPanels = itemHashes.ProcessCaptureImages(CaptureImagesGlobalTrade());
                     var clickPoint = this.tradeWindow.CalcClickPointGlobalTrade(globalPanels[random.Next(globalPanels.Count())]);
                     touch.ClickAt(clickPoint);
                 }
-                Sleep(1);
+                WaitForSeconds(1);
 
                 // wait for items to appear
                 WaitFor(this.tradeWindow.IsTradeDepotLogoVisible, "Trade Logo");
-                Sleep(1);
+                WaitForSeconds(1);
                 SleepUntilTradeDepotItemsAreVisible(30);
-                var panels = ProcessCaptureImages(subPath, hashes, CaptureImagesTradeDepot());
+                var panels = itemHashes.ProcessCaptureImages(CaptureImagesTradeDepot());
                 BuyTradeDepotItems(panels);
 
                 if (panels.Count() > 7)
                 {
                     // swipe
                     touch.Swipe(Bot.Location.GlobalTradeMiddleRight, Bot.Location.GlobalTradeMiddleRight, Bot.Location.GlobalTradeMiddleLeft, swipeSteps, true);
-                    Sleep(1);
-                    panels = ProcessCaptureImages(subPath, hashes, CaptureImagesTradeDepot());
+                    WaitForSeconds(1);
+                    panels = itemHashes.ProcessCaptureImages(CaptureImagesTradeDepot());
                     BuyTradeDepotItems(panels);
                 }
 
                 if (panels.Count() > 7)
                 {
                     touch.Swipe(Bot.Location.GlobalTradeMiddleRight, Bot.Location.GlobalTradeMiddleRight, Bot.Location.GlobalTradeMiddleLeft, swipeSteps, true);
-                    Sleep(1);
-                    panels = ProcessCaptureImages(subPath, hashes, CaptureImagesTradeDepot());
+                    WaitForSeconds(1);
+                    panels = itemHashes.ProcessCaptureImages(CaptureImagesTradeDepot());
                     BuyTradeDepotItems(panels);
                 }
 
                 // Click home button
-                Sleep(1);
+                WaitForSeconds(1);
 
                 int nn = 0;
                 while (this.tradeWindow.IsTradeDepotLogoVisible())
@@ -659,7 +462,7 @@ namespace SimCityBuildItBot
                     }
                 }
                 touch.ClickAt(Bot.Location.GlobalTradeOtherCity);
-                Sleep(2);
+                WaitForSeconds(2);
 
                 if (CaptureImagesGlobalTrade().Count == 0)
                 {
@@ -680,14 +483,14 @@ namespace SimCityBuildItBot
                     var clickPoint = this.tradeWindow.CalcClickPointTradeDepot(item);
                     touch.ClickAt(clickPoint);
                     Debug.WriteLine(DateTime.Now.ToShortTimeString() + " Bought: " + item.Item);
-                    Sleep(4);
+                    WaitForSeconds(4);
                 }
             }
         }
 
-        private PanelLocation GetDesiredItem(string subPath, Dictionary<ulong, string> hashes, List<PanelLocation> panels)
+        private PanelLocation GetDesiredItem(List<PanelLocation> panels)
         {
-            var items = ProcessCaptureImages(subPath, hashes, panels);
+            var items = itemHashes.ProcessCaptureImages(panels);
 
             foreach (var desired in DesiredItems)
             {
@@ -701,13 +504,13 @@ namespace SimCityBuildItBot
             return null;
         }
 
-        private PanelLocation ScanGlobalForDesiredItems(string subPath, Dictionary<ulong, string> hashes)
+        private PanelLocation ScanGlobalForDesiredItems()
         {
             for (int i = 0; i < 3; i++)
             {
                 var items = CaptureImagesGlobalTrade();
 
-                var item = GetDesiredItem(subPath, hashes, items);
+                var item = GetDesiredItem(items);
                 if (item != null)
                 {
                     return item;
@@ -721,7 +524,7 @@ namespace SimCityBuildItBot
                 if (i < 2)
                 {
                     touch.Swipe(Bot.Location.GlobalTradeMiddleRight, Bot.Location.GlobalTradeMiddleRight, Bot.Location.GlobalTradeMiddleLeft, swipeSteps, true);
-                    Sleep(1);
+                    WaitForSeconds(1);
                 }
             }
 
@@ -730,11 +533,11 @@ namespace SimCityBuildItBot
 
         public List<PanelLocation> CaptureImagesTradeDepot()
         {
-            var image = this.tradeWindow.CaptureTradeWindow(captureScreen);
+            var image = this.tradeWindow.CaptureTradeWindow();
 
             List<int> tops = GetTradeDepotTops(image);
 
-            var locs = FindPanelStartsTradeDepot(image, tops);
+            var locs = tradePanelCapture.FindPanelStartsTradeDepot(image, tops);
 
             locs.ForEach(p =>
             {
@@ -760,7 +563,7 @@ namespace SimCityBuildItBot
 
                 Application.DoEvents();
                 this.Text = text + " - Waitied for trade depot for " + ((int)(sw.ElapsedMilliseconds / 1000)) + " seconds";
-                Thread.Sleep(500);
+                Bot.BotApplication.Wait(500);
             }
 
             this.Text = text;
@@ -768,9 +571,9 @@ namespace SimCityBuildItBot
 
         private List<PanelLocation> GetTradeDepotLocations()
         {
-            var image = this.tradeWindow.CaptureTradeWindow(captureScreen);
+            var image = this.tradeWindow.CaptureTradeWindow();
             var tops = this.tradeWindow.imageTopsTradeDepot;
-            var locs = FindPanelStartsTradeDepot(image, tops);
+            var locs = tradePanelCapture.FindPanelStartsTradeDepot(image, tops);
             return locs;
         }
 
@@ -784,13 +587,18 @@ namespace SimCityBuildItBot
             this.btnCaptureTradeDepot.BackColor = this.tradeWindow.IsTradeDepotLogoVisible() ? Color.Green : Color.Red;
         }
 
+        private void btnCaptureEditSale_Click(object sender, EventArgs e)
+        {
+            this.btnCaptureEditSale.BackColor = this.tradeWindow.IsEditSaleCloseButtonVisible() ? Color.Green : Color.Red;
+        }
+
         private void btnClickPanelTrade_Click(object sender, EventArgs e)
         {
-            var image = this.tradeWindow.CaptureTradeWindow(captureScreen);
+            var image = this.tradeWindow.CaptureTradeWindow();
 
             List<int> tops = GetTradeDepotTops(image);
 
-            var locs = FindPanelStartsTradeDepot(image, tops);
+            var locs = tradePanelCapture.FindPanelStartsTradeDepot(image, tops);
 
             var i = 0;
             if (int.TryParse(this.cboPanel.SelectedItem.ToString(), out i))
@@ -805,6 +613,59 @@ namespace SimCityBuildItBot
                     touch.Swipe(clickPoint, clickPoint, pointTo, 1, true);
                 }
             }
+        }
+
+        private void bntCollectSales_Click(object sender, EventArgs e)
+        {
+            this.bntCollectSales.BackColor = Color.YellowGreen;
+
+            navigateToBuilding.NavigateTo(BuildingMatch.Get(Building.TradeDepot), 1);
+
+            if (!this.tradeWindow.IsTradeDepotLogoVisible())
+            {
+                this.bntCollectSales.BackColor = Color.Red;
+                return;
+            }
+
+            btnCaptureImagesTradeDepot_Click(sender, e);
+            salesman.CollectSales();
+
+            this.bntCollectSales.BackColor = Color.Gray;
+        }
+
+
+        private void btnMakeSale_Click(object sender, EventArgs e)
+        {
+            this.btnMakeSale.BackColor = Color.YellowGreen;
+            Application.DoEvents();
+
+            this.btnMakeSale.BackColor = salesman.Sell() ? Color.Green : Color.Red;
+        }
+
+      
+
+        private void btnCaptureInventory_Click(object sender, EventArgs e)
+        {
+            var image = this.tradeWindow.CaptureForSaleInventory();
+            ImageViewer.ShowBitmap(image, this.pictureBoxAll);
+
+            var panels = itemHashes.ProcessCaptureImages(this.tradePanelCapture.CaptureCreateSaleItems());
+        }
+
+        private void btnCaptureGlobalTrade_Click(object sender, EventArgs e)
+        {
+            this.btnCaptureGlobalTrade.BackColor = this.tradeWindow.IsGlobalTradeVisible() ? Color.Green : Color.Red;
+        }
+
+        private void btnIsHomeButtonVisible_Click(object sender, EventArgs e)
+        {
+            this.btnIsHomeButtonVisible.BackColor = this.tradeWindow.IsHomeButtonVisible() ? Color.Green : Color.Red;
+        }
+
+        private void btnIsOfflineButtonVisible_Click(object sender, EventArgs e)
+        {
+            this.btnIsOfflineButtonVisible.BackColor = this.tradeWindow.IsOfflineButtonVisible() ? Color.Green : Color.Red;
+            
         }
     }
 }

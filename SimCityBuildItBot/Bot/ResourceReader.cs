@@ -79,7 +79,7 @@
             touch.TouchDown();
             touch.MoveTo(Constants.GetPoint(clickAt));
 
-            System.Threading.Thread.Sleep(300);
+            BotApplication.Wait(300);
 
             var images = resourceLocations.Select(resourceLocation =>
             {

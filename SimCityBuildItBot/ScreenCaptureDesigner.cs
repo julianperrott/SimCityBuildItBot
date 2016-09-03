@@ -58,7 +58,7 @@ namespace SimCityBuildItBot
             t.TouchDown();
             t.MoveTo(new Point(int.Parse(this.txtX.Text), int.Parse(this.txtY.Text)));
 
-            System.Threading.Thread.Sleep(200);
+            Bot.BotApplication.Wait(200);
             btnCapture_Click(sender, e);
             t.TouchUp();
             t.EndTouchData();
@@ -115,7 +115,7 @@ namespace SimCityBuildItBot
         //    t.TouchDown();
         //    t.MoveTo(item1);
 
-        //    System.Threading.Thread.Sleep(200);
+        //    ApplicationSleep.Wait(200);
 
         //    var capturePoint = new Point(int.Parse(this.txtX.Text), int.Parse(this.txtY.Text));
         //    var width = int.Parse(this.txtWidth.Text);

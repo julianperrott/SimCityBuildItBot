@@ -15,7 +15,13 @@
         GardenFurniture,
         FlourBag,
         Vegetable,
-        Ladder
+        Ladder,
+        MeasuringTape,
+        IceCreamSandwich,
+        GreenSmoothie,
+        Table,
+        BBQGrill
+
     }
 
     public class CommerceItemBuild
@@ -41,6 +47,11 @@
                 {
                     Bot.FactoryResource.Metal,
                     Bot.FactoryResource.Wood
+                }),
+                 new CommerceItemBuild(CommerceItem.MeasuringTape ,Building.HardwareStore, Bot.Location.ButtonLeftInner2,  new List<Bot.FactoryResource>()
+                {
+                    Bot.FactoryResource.Metal,
+                    Bot.FactoryResource.Plastic
                 }),
                  new CommerceItemBuild(CommerceItem.Ladder ,Building.HardwareStore, Bot.Location.ButtonRightInner2,  new List<Bot.FactoryResource>()
                 {
@@ -69,10 +80,21 @@
                     Bot.FactoryResource.Ignore,
                     Bot.FactoryResource.SugarAndSpices
                 }),
+                new CommerceItemBuild(CommerceItem.GreenSmoothie,Building.DonutShop, Bot.Location.ButtonLeftInner2, new List<Bot.FactoryResource>()
+                {
+                    Bot.FactoryResource.Ignore,
+                    Bot.FactoryResource.Ignore
+                }),
                 new CommerceItemBuild(CommerceItem.Chair,Building.FurnitureStore, Bot.Location.ButtonLeftInner1,  new List<Bot.FactoryResource>()
                 {
                     Bot.FactoryResource.Wood,
                     Bot.FactoryResource.Metal,
+                    Bot.FactoryResource.Ignore
+                }),
+                new CommerceItemBuild(CommerceItem.Table,Building.FurnitureStore, Bot.Location.ButtonLeftInner2,  new List<Bot.FactoryResource>()
+                {
+                    Bot.FactoryResource.Ignore,
+                    Bot.FactoryResource.Ignore,
                     Bot.FactoryResource.Ignore
                 }),
                 new CommerceItemBuild(CommerceItem.Nails,Building.BuildingSuppliesStore, Bot.Location.ButtonLeftInner1,  new List<Bot.FactoryResource>()
@@ -98,6 +120,16 @@
                 new CommerceItemBuild(CommerceItem.Vegetable,Building.FarmersMarket, Bot.Location.ButtonLeftInner1, new List<Bot.FactoryResource>()
                 {
                     Bot.FactoryResource.Seeds
+                }),
+                new CommerceItemBuild(CommerceItem.IceCreamSandwich,Building.FastFoodRestaurant, Bot.Location.ButtonLeftInner1, new List<Bot.FactoryResource>()
+                {
+                    Bot.FactoryResource.Ignore,
+                    Bot.FactoryResource.Ignore
+                }),
+                 new CommerceItemBuild(CommerceItem.BBQGrill,Building.HomeAppliances, Bot.Location.ButtonLeftInner1, new List<Bot.FactoryResource>()
+                {
+                    Bot.FactoryResource.Metal,
+                    Bot.FactoryResource.Ignore
                 }),
             };
         }

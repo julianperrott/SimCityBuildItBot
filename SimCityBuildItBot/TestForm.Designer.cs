@@ -46,6 +46,8 @@
             this.production1Textiles = new System.Windows.Forms.Button();
             this.buildTextiles = new System.Windows.Forms.Button();
             this.txtRequired = new System.Windows.Forms.TextBox();
+            this.btnNavigateToTradeDepot = new System.Windows.Forms.Button();
+            this.btnNavigateToGlobalTradeDepot = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnSelect
@@ -230,11 +232,33 @@
             this.txtRequired.Size = new System.Drawing.Size(885, 139);
             this.txtRequired.TabIndex = 19;
             // 
+            // btnNavigateToTradeDepot
+            // 
+            this.btnNavigateToTradeDepot.Location = new System.Drawing.Point(13, 99);
+            this.btnNavigateToTradeDepot.Name = "btnNavigateToTradeDepot";
+            this.btnNavigateToTradeDepot.Size = new System.Drawing.Size(164, 23);
+            this.btnNavigateToTradeDepot.TabIndex = 20;
+            this.btnNavigateToTradeDepot.Text = "Navigate To Trade Depot";
+            this.btnNavigateToTradeDepot.UseVisualStyleBackColor = true;
+            this.btnNavigateToTradeDepot.Click += new System.EventHandler(this.btnNavigateToTradeDepot_Click);
+            // 
+            // btnNavigateToGlobalTradeDepot
+            // 
+            this.btnNavigateToGlobalTradeDepot.Location = new System.Drawing.Point(13, 70);
+            this.btnNavigateToGlobalTradeDepot.Name = "btnNavigateToGlobalTradeDepot";
+            this.btnNavigateToGlobalTradeDepot.Size = new System.Drawing.Size(164, 23);
+            this.btnNavigateToGlobalTradeDepot.TabIndex = 21;
+            this.btnNavigateToGlobalTradeDepot.Text = "Navigate To Global Trade";
+            this.btnNavigateToGlobalTradeDepot.UseVisualStyleBackColor = true;
+            this.btnNavigateToGlobalTradeDepot.Click += new System.EventHandler(this.btnNavigateToGlobalTradeDepot_Click);
+            // 
             // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(885, 795);
+            this.Controls.Add(this.btnNavigateToGlobalTradeDepot);
+            this.Controls.Add(this.btnNavigateToTradeDepot);
             this.Controls.Add(this.txtRequired);
             this.Controls.Add(this.buildTextiles);
             this.Controls.Add(this.production1Textiles);
@@ -281,5 +305,7 @@
         private System.Windows.Forms.Button production1Textiles;
         private System.Windows.Forms.Button buildTextiles;
         private System.Windows.Forms.TextBox txtRequired;
+        private System.Windows.Forms.Button btnNavigateToTradeDepot;
+        private System.Windows.Forms.Button btnNavigateToGlobalTradeDepot;
     }
 }

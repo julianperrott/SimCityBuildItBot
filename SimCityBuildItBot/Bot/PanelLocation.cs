@@ -4,6 +4,10 @@
 
     public class PanelLocation
     {
+        public int Row { get; set; }
+
+        public int Column { get; set; }
+
         public Point Start { get; set; }
 
         public Point ImageGlobalTradePoint

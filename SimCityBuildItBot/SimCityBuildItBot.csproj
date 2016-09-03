@@ -93,13 +93,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitmapExtension.cs" />
+    <Compile Include="Bot\Application.cs" />
     <Compile Include="Bot\Building.cs" />
     <Compile Include="Bot\BuildingMatch.cs" />
     <Compile Include="Bot\BuildingSelector.cs" />
     <Compile Include="Bot\BuildingType.cs" />
     <Compile Include="Bot\CommerceItem.cs" />
     <Compile Include="Bot\Constants.cs" />
+    <Compile Include="Bot\Craftsman.cs" />
     <Compile Include="Bot\FactoryResource.cs" />
+    <Compile Include="Bot\ItemHashes.cs" />
     <Compile Include="Bot\LogToText.cs" />
     <Compile Include="Bot\MemuChooser.cs">
       <SubType>Form</SubType>
@@ -111,6 +114,7 @@
     <Compile Include="Bot\PanelLocation.cs" />
     <Compile Include="Bot\ResourceReader.cs" />
     <Compile Include="Bot\CaptureScreen.cs" />
+    <Compile Include="Bot\Salesman.cs" />
     <Compile Include="Bot\TradePanelCapture.cs" />
     <Compile Include="Bot\TradeWindow.cs" />
     <Compile Include="DebugForm.cs">
@@ -141,6 +145,12 @@
     <Compile Include="BotForm.Designer.cs">
       <DependentUpon>BotForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShoppingListsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShoppingListsForm.Designer.cs">
+      <DependentUpon>ShoppingListsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +158,12 @@
       <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Bot\Touch.cs" />
+    <Compile Include="BuyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BuyForm.Designer.cs">
+      <DependentUpon>BuyForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TradeDepot.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,8 +195,14 @@
     <EmbeddedResource Include="BotForm.resx">
       <DependentUpon>BotForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ShoppingListsForm.resx">
+      <DependentUpon>ShoppingListsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BuyForm.resx">
+      <DependentUpon>BuyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TradeDepot.resx">
       <DependentUpon>TradeDepot.cs</DependentUpon>
@@ -268,6 +290,7 @@
       <Name>SimplePaletteQuantizer</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

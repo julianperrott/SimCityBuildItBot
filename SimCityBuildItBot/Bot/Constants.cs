@@ -50,6 +50,14 @@
 
                 case Location.GlobalTradeOtherCity: return new Point(1700, 1040);
 
+                case Location.HomeTradeDepot: return new Point(318, 271);
+                case Location.TradeDepotClose: return new Point(1593, 90);
+                case Location.GlobalTradeDepotClose: return new Point(1593, 90);
+
+                case Location.CreateSaleQuantityPlus: return new Point(1426, 403);
+                case Location.CreateSalePricePlus: return new Point(1426, 651);
+                case Location.CreateSalePutOnSale: return new Point(1269, 957);
+                case Location.GlobalTradeFromFastFood: return new Point(432, 662);
             }
 
             throw new Exception("Unknown location!");
@@ -109,7 +117,14 @@
 
         HomeButton,
         GlobalTrade,
-        GlobalTradeOtherCity
+        GlobalTradeOtherCity,
+        GlobalTradeFromFastFood,
+        HomeTradeDepot,
+        TradeDepotClose,
+        GlobalTradeDepotClose,
 
+        CreateSaleQuantityPlus,
+        CreateSalePricePlus,
+        CreateSalePutOnSale
     }
 }

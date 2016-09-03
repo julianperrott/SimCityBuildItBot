@@ -94,3 +94,5 @@ F:\GitHub\SimCityBuildItBot\SimCityBuildItBot\obj\Debug\SimCityBuildItBot.TestFo
 F:\GitHub\SimCityBuildItBot\SimCityBuildItBot\obj\Debug\SimCityBuildItBot.csproj.GenerateResource.Cache
 F:\GitHub\SimCityBuildItBot\SimCityBuildItBot\obj\Debug\SimCityBuildItBot.TradeDepot.resources
 F:\GitHub\SimCityBuildItBot\SimCityBuildItBot\obj\Debug\SimCityBuildItBot.Bot.MemuChooser.resources
+F:\GitHub\SimCityBuildItBot\SimCityBuildItBot\obj\Debug\SimCityBuildItBot.ShoppingListsForm.resources
+F:\GitHub\SimCityBuildItBot\SimCityBuildItBot\obj\Debug\SimCityBuildItBot.BuyForm.resources

@@ -13,6 +13,9 @@
         FastFoodRestaurant = 8,
         BasicFactory = 9,
         MassProductionFactory = 10,
-        HighTechFactory = 11
+        HighTechFactory = 11,
+        TradeDepot = 12,
+        GlobalTrade = 13,
+        HomeAppliances = 14
     }
 }

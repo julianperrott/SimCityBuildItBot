@@ -67,6 +67,14 @@
             this.btnClickPanelTrade = new System.Windows.Forms.Button();
             this.cbDebug = new System.Windows.Forms.CheckBox();
             this.txtLog = new System.Windows.Forms.TextBox();
+            this.bntCollectSales = new System.Windows.Forms.Button();
+            this.btnMakeSale = new System.Windows.Forms.Button();
+            this.btnCaptureEditSale = new System.Windows.Forms.Button();
+            this.btnCaptureInventory = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnCaptureGlobalTrade = new System.Windows.Forms.Button();
+            this.btnIsHomeButtonVisible = new System.Windows.Forms.Button();
+            this.btnIsOfflineButtonVisible = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb1)).BeginInit();
@@ -112,9 +120,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxAll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBoxAll.Location = new System.Drawing.Point(12, 265);
+            this.pictureBoxAll.Location = new System.Drawing.Point(12, 299);
             this.pictureBoxAll.Name = "pictureBoxAll";
-            this.pictureBoxAll.Size = new System.Drawing.Size(1138, 448);
+            this.pictureBoxAll.Size = new System.Drawing.Size(1358, 414);
             this.pictureBoxAll.TabIndex = 10;
             this.pictureBoxAll.TabStop = false;
             // 
@@ -162,16 +170,16 @@
             // 
             this.btnCaptureResetButton.Location = new System.Drawing.Point(791, 6);
             this.btnCaptureResetButton.Name = "btnCaptureResetButton";
-            this.btnCaptureResetButton.Size = new System.Drawing.Size(102, 23);
+            this.btnCaptureResetButton.Size = new System.Drawing.Size(206, 23);
             this.btnCaptureResetButton.TabIndex = 15;
-            this.btnCaptureResetButton.Text = "Capture Reset Button";
+            this.btnCaptureResetButton.Text = "IsRefreshGlobalTradeButtonVisible";
             this.btnCaptureResetButton.UseVisualStyleBackColor = true;
             this.btnCaptureResetButton.Click += new System.EventHandler(this.btnCaptureResetButton_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBox1.Location = new System.Drawing.Point(899, 2);
+            this.pictureBox1.Location = new System.Drawing.Point(1003, 6);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(176, 114);
             this.pictureBox1.TabIndex = 16;
@@ -234,38 +242,39 @@
             // 
             // btnTradeDepotStartCapture
             // 
-            this.btnTradeDepotStartCapture.Location = new System.Drawing.Point(575, 78);
+            this.btnTradeDepotStartCapture.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTradeDepotStartCapture.Location = new System.Drawing.Point(660, 78);
             this.btnTradeDepotStartCapture.Name = "btnTradeDepotStartCapture";
             this.btnTradeDepotStartCapture.Size = new System.Drawing.Size(102, 23);
             this.btnTradeDepotStartCapture.TabIndex = 23;
-            this.btnTradeDepotStartCapture.Text = "Start Capture";
+            this.btnTradeDepotStartCapture.Text = "Buy Items";
             this.btnTradeDepotStartCapture.UseVisualStyleBackColor = true;
             this.btnTradeDepotStartCapture.Click += new System.EventHandler(this.btnTradeDepotStartCapture_Click);
             // 
             // btnCaptureConfigButton
             // 
-            this.btnCaptureConfigButton.Location = new System.Drawing.Point(791, 35);
+            this.btnCaptureConfigButton.Location = new System.Drawing.Point(791, 26);
             this.btnCaptureConfigButton.Name = "btnCaptureConfigButton";
-            this.btnCaptureConfigButton.Size = new System.Drawing.Size(102, 23);
+            this.btnCaptureConfigButton.Size = new System.Drawing.Size(206, 23);
             this.btnCaptureConfigButton.TabIndex = 24;
-            this.btnCaptureConfigButton.Text = "Capture Config Button";
+            this.btnCaptureConfigButton.Text = "IsConfigButtonVisible";
             this.btnCaptureConfigButton.UseVisualStyleBackColor = true;
             this.btnCaptureConfigButton.Click += new System.EventHandler(this.btnCaptureConfigButton_Click);
             // 
             // btnCaptureTradeDepot
             // 
-            this.btnCaptureTradeDepot.Location = new System.Drawing.Point(791, 64);
+            this.btnCaptureTradeDepot.Location = new System.Drawing.Point(791, 48);
             this.btnCaptureTradeDepot.Name = "btnCaptureTradeDepot";
-            this.btnCaptureTradeDepot.Size = new System.Drawing.Size(102, 23);
+            this.btnCaptureTradeDepot.Size = new System.Drawing.Size(206, 23);
             this.btnCaptureTradeDepot.TabIndex = 25;
-            this.btnCaptureTradeDepot.Text = "Capture Trade Button";
+            this.btnCaptureTradeDepot.Text = "IsTradeDepotLogoVisible";
             this.btnCaptureTradeDepot.UseVisualStyleBackColor = true;
             this.btnCaptureTradeDepot.Click += new System.EventHandler(this.btnCaptureTradeDepot_Click);
             // 
             // pb1
             // 
             this.pb1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pb1.Location = new System.Drawing.Point(15, 116);
+            this.pb1.Location = new System.Drawing.Point(11, 148);
             this.pb1.Name = "pb1";
             this.pb1.Size = new System.Drawing.Size(112, 106);
             this.pb1.TabIndex = 26;
@@ -274,7 +283,7 @@
             // pb2
             // 
             this.pb2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pb2.Location = new System.Drawing.Point(133, 116);
+            this.pb2.Location = new System.Drawing.Point(129, 148);
             this.pb2.Name = "pb2";
             this.pb2.Size = new System.Drawing.Size(112, 106);
             this.pb2.TabIndex = 27;
@@ -283,7 +292,7 @@
             // pb3
             // 
             this.pb3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pb3.Location = new System.Drawing.Point(251, 116);
+            this.pb3.Location = new System.Drawing.Point(247, 148);
             this.pb3.Name = "pb3";
             this.pb3.Size = new System.Drawing.Size(112, 106);
             this.pb3.TabIndex = 28;
@@ -292,7 +301,7 @@
             // pb4
             // 
             this.pb4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pb4.Location = new System.Drawing.Point(369, 116);
+            this.pb4.Location = new System.Drawing.Point(365, 148);
             this.pb4.Name = "pb4";
             this.pb4.Size = new System.Drawing.Size(112, 106);
             this.pb4.TabIndex = 29;
@@ -301,7 +310,7 @@
             // pb8
             // 
             this.pb8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pb8.Location = new System.Drawing.Point(845, 116);
+            this.pb8.Location = new System.Drawing.Point(841, 148);
             this.pb8.Name = "pb8";
             this.pb8.Size = new System.Drawing.Size(112, 106);
             this.pb8.TabIndex = 33;
@@ -310,7 +319,7 @@
             // pb7
             // 
             this.pb7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pb7.Location = new System.Drawing.Point(727, 116);
+            this.pb7.Location = new System.Drawing.Point(723, 148);
             this.pb7.Name = "pb7";
             this.pb7.Size = new System.Drawing.Size(112, 106);
             this.pb7.TabIndex = 32;
@@ -319,7 +328,7 @@
             // pb6
             // 
             this.pb6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pb6.Location = new System.Drawing.Point(609, 116);
+            this.pb6.Location = new System.Drawing.Point(605, 148);
             this.pb6.Name = "pb6";
             this.pb6.Size = new System.Drawing.Size(112, 106);
             this.pb6.TabIndex = 31;
@@ -328,7 +337,7 @@
             // pb5
             // 
             this.pb5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pb5.Location = new System.Drawing.Point(491, 116);
+            this.pb5.Location = new System.Drawing.Point(487, 148);
             this.pb5.Name = "pb5";
             this.pb5.Size = new System.Drawing.Size(112, 106);
             this.pb5.TabIndex = 30;
@@ -336,63 +345,63 @@
             // 
             // tb1
             // 
-            this.tb1.Location = new System.Drawing.Point(15, 228);
+            this.tb1.Location = new System.Drawing.Point(11, 260);
             this.tb1.Name = "tb1";
             this.tb1.Size = new System.Drawing.Size(112, 20);
             this.tb1.TabIndex = 34;
             // 
             // tb2
             // 
-            this.tb2.Location = new System.Drawing.Point(133, 228);
+            this.tb2.Location = new System.Drawing.Point(129, 260);
             this.tb2.Name = "tb2";
             this.tb2.Size = new System.Drawing.Size(112, 20);
             this.tb2.TabIndex = 35;
             // 
             // tb3
             // 
-            this.tb3.Location = new System.Drawing.Point(251, 228);
+            this.tb3.Location = new System.Drawing.Point(247, 260);
             this.tb3.Name = "tb3";
             this.tb3.Size = new System.Drawing.Size(112, 20);
             this.tb3.TabIndex = 36;
             // 
             // tb4
             // 
-            this.tb4.Location = new System.Drawing.Point(369, 228);
+            this.tb4.Location = new System.Drawing.Point(365, 260);
             this.tb4.Name = "tb4";
             this.tb4.Size = new System.Drawing.Size(112, 20);
             this.tb4.TabIndex = 37;
             // 
             // tb5
             // 
-            this.tb5.Location = new System.Drawing.Point(491, 228);
+            this.tb5.Location = new System.Drawing.Point(487, 260);
             this.tb5.Name = "tb5";
             this.tb5.Size = new System.Drawing.Size(112, 20);
             this.tb5.TabIndex = 38;
             // 
             // tb6
             // 
-            this.tb6.Location = new System.Drawing.Point(609, 228);
+            this.tb6.Location = new System.Drawing.Point(605, 260);
             this.tb6.Name = "tb6";
             this.tb6.Size = new System.Drawing.Size(112, 20);
             this.tb6.TabIndex = 39;
             // 
             // tb7
             // 
-            this.tb7.Location = new System.Drawing.Point(727, 228);
+            this.tb7.Location = new System.Drawing.Point(723, 260);
             this.tb7.Name = "tb7";
             this.tb7.Size = new System.Drawing.Size(112, 20);
             this.tb7.TabIndex = 40;
             // 
             // tb8
             // 
-            this.tb8.Location = new System.Drawing.Point(845, 228);
+            this.tb8.Location = new System.Drawing.Point(841, 260);
             this.tb8.Name = "tb8";
             this.tb8.Size = new System.Drawing.Size(112, 20);
             this.tb8.TabIndex = 41;
             // 
             // btnClickPanelTrade
             // 
-            this.btnClickPanelTrade.Location = new System.Drawing.Point(338, 78);
+            this.btnClickPanelTrade.Location = new System.Drawing.Point(519, 78);
             this.btnClickPanelTrade.Name = "btnClickPanelTrade";
             this.btnClickPanelTrade.Size = new System.Drawing.Size(102, 23);
             this.btnClickPanelTrade.TabIndex = 42;
@@ -412,17 +421,105 @@
             // 
             // txtLog
             // 
-            this.txtLog.Location = new System.Drawing.Point(963, 122);
+            this.txtLog.Location = new System.Drawing.Point(959, 154);
             this.txtLog.Multiline = true;
             this.txtLog.Name = "txtLog";
             this.txtLog.Size = new System.Drawing.Size(190, 137);
             this.txtLog.TabIndex = 44;
             // 
+            // bntCollectSales
+            // 
+            this.bntCollectSales.Location = new System.Drawing.Point(230, 107);
+            this.bntCollectSales.Name = "bntCollectSales";
+            this.bntCollectSales.Size = new System.Drawing.Size(102, 23);
+            this.bntCollectSales.TabIndex = 45;
+            this.bntCollectSales.Text = "Collect Sales";
+            this.bntCollectSales.UseVisualStyleBackColor = true;
+            this.bntCollectSales.Click += new System.EventHandler(this.bntCollectSales_Click);
+            // 
+            // btnMakeSale
+            // 
+            this.btnMakeSale.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMakeSale.Location = new System.Drawing.Point(660, 107);
+            this.btnMakeSale.Name = "btnMakeSale";
+            this.btnMakeSale.Size = new System.Drawing.Size(102, 23);
+            this.btnMakeSale.TabIndex = 46;
+            this.btnMakeSale.Text = "Make Sale";
+            this.btnMakeSale.UseVisualStyleBackColor = true;
+            this.btnMakeSale.Click += new System.EventHandler(this.btnMakeSale_Click);
+            // 
+            // btnCaptureEditSale
+            // 
+            this.btnCaptureEditSale.Location = new System.Drawing.Point(791, 73);
+            this.btnCaptureEditSale.Name = "btnCaptureEditSale";
+            this.btnCaptureEditSale.Size = new System.Drawing.Size(206, 23);
+            this.btnCaptureEditSale.TabIndex = 47;
+            this.btnCaptureEditSale.Text = "IsEditSaleCloseButtonVisible";
+            this.btnCaptureEditSale.UseVisualStyleBackColor = true;
+            this.btnCaptureEditSale.Click += new System.EventHandler(this.btnCaptureEditSale_Click);
+            // 
+            // btnCaptureInventory
+            // 
+            this.btnCaptureInventory.Location = new System.Drawing.Point(338, 107);
+            this.btnCaptureInventory.Name = "btnCaptureInventory";
+            this.btnCaptureInventory.Size = new System.Drawing.Size(102, 23);
+            this.btnCaptureInventory.TabIndex = 48;
+            this.btnCaptureInventory.Text = "Capture Inventory";
+            this.btnCaptureInventory.UseVisualStyleBackColor = true;
+            this.btnCaptureInventory.Click += new System.EventHandler(this.btnCaptureInventory_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(154, 112);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(69, 13);
+            this.label3.TabIndex = 49;
+            this.label3.Text = "Home Trade:";
+            // 
+            // btnCaptureGlobalTrade
+            // 
+            this.btnCaptureGlobalTrade.Location = new System.Drawing.Point(791, 100);
+            this.btnCaptureGlobalTrade.Name = "btnCaptureGlobalTrade";
+            this.btnCaptureGlobalTrade.Size = new System.Drawing.Size(206, 23);
+            this.btnCaptureGlobalTrade.TabIndex = 50;
+            this.btnCaptureGlobalTrade.Text = "IsGlobalTradeVisible";
+            this.btnCaptureGlobalTrade.UseVisualStyleBackColor = true;
+            this.btnCaptureGlobalTrade.Click += new System.EventHandler(this.btnCaptureGlobalTrade_Click);
+            // 
+            // btnIsHomeButtonVisible
+            // 
+            this.btnIsHomeButtonVisible.Location = new System.Drawing.Point(791, 125);
+            this.btnIsHomeButtonVisible.Name = "btnIsHomeButtonVisible";
+            this.btnIsHomeButtonVisible.Size = new System.Drawing.Size(206, 23);
+            this.btnIsHomeButtonVisible.TabIndex = 51;
+            this.btnIsHomeButtonVisible.Text = "IsHomeButtonVisible";
+            this.btnIsHomeButtonVisible.UseVisualStyleBackColor = true;
+            this.btnIsHomeButtonVisible.Click += new System.EventHandler(this.btnIsHomeButtonVisible_Click);
+            // 
+            // btnIsOfflineButtonVisible
+            // 
+            this.btnIsOfflineButtonVisible.Location = new System.Drawing.Point(1185, 6);
+            this.btnIsOfflineButtonVisible.Name = "btnIsOfflineButtonVisible";
+            this.btnIsOfflineButtonVisible.Size = new System.Drawing.Size(157, 23);
+            this.btnIsOfflineButtonVisible.TabIndex = 52;
+            this.btnIsOfflineButtonVisible.Text = "IsOfflineButtonVisible";
+            this.btnIsOfflineButtonVisible.UseVisualStyleBackColor = true;
+            this.btnIsOfflineButtonVisible.Click += new System.EventHandler(this.btnIsOfflineButtonVisible_Click);
+            // 
             // TradeDepot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1162, 725);
+            this.ClientSize = new System.Drawing.Size(1382, 725);
+            this.Controls.Add(this.btnIsOfflineButtonVisible);
+            this.Controls.Add(this.btnIsHomeButtonVisible);
+            this.Controls.Add(this.btnCaptureGlobalTrade);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.btnCaptureInventory);
+            this.Controls.Add(this.btnCaptureEditSale);
+            this.Controls.Add(this.btnMakeSale);
+            this.Controls.Add(this.bntCollectSales);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.cbDebug);
             this.Controls.Add(this.btnClickPanelTrade);
@@ -515,5 +612,13 @@
         private System.Windows.Forms.Button btnClickPanelTrade;
         private System.Windows.Forms.CheckBox cbDebug;
         private System.Windows.Forms.TextBox txtLog;
+        private System.Windows.Forms.Button bntCollectSales;
+        private System.Windows.Forms.Button btnMakeSale;
+        private System.Windows.Forms.Button btnCaptureEditSale;
+        private System.Windows.Forms.Button btnCaptureInventory;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnCaptureGlobalTrade;
+        private System.Windows.Forms.Button btnIsHomeButtonVisible;
+        private System.Windows.Forms.Button btnIsOfflineButtonVisible;
     }
 }

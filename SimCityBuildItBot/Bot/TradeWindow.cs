@@ -31,29 +31,34 @@
         public int clickXExtra = 272;
         public List<int> clickY = new List<int>() { 374, 738 };
 
-        public const ulong ResetButtonHash = 17521127647493644;
+        public const ulong RefreshGlobalTrade = 17521127647493644;
 
         public const ulong ConfigButtonHash = 35869570894094686;
         public const ulong TradeDepotLogoHash = 4071112760807423612;
-
-        public Bitmap CaptureTradeWindow(CaptureScreen captureScreen)
+        public const ulong CreateSaleHash = 35887226814411264;
+        public Bitmap CaptureTradeWindow()
         {
             return captureScreen.SnapShot(X, Y, Size);
         }
 
-        public Bitmap CaptureResetButton(CaptureScreen captureScreen)
+        public Bitmap CaptureRefreshGlobalTradeButton()
         {
-            return captureScreen.SnapShot( 835, 935, new Size(55, 55));
+            return captureScreen.SnapShot(835, 935, new Size(55, 55));
         }
 
-        public Bitmap CaptureConfigButton(CaptureScreen captureScreen)
+        public Bitmap CaptureConfigButton()
         {
-            return captureScreen.SnapShot( 60, 275, new Size(90, 90));
+            return captureScreen.SnapShot(60, 275, new Size(90, 90));
         }
 
-        public Bitmap CaptureTradeDepotLogo(CaptureScreen captureScreen)
+        public Bitmap CaptureTradeDepotLogo()
         {
-            return captureScreen.SnapShot(320, 95, new Size(60, 65));
+            return captureScreen.SnapShot(330, 100, new Size(45, 50));
+        }
+
+        public Bitmap CaptureEditSaleCloseButton()
+        {
+            return captureScreen.SnapShot(1525, 95, new Size(55, 55));
         }
 
         public Point CalcClickPointGlobalTrade(PanelLocation loc)
@@ -72,15 +77,20 @@
             return new Point(x, y);
         }
 
-        public Func<bool> IsResetButtonVisible
+        public Point CalcClickPointCreateSaleItem(PanelLocation loc)
+        {
+            return new Point(520 + loc.Column * 280, 408 + loc.Row * 176);
+        }
+
+        public Func<bool> IsRefreshGlobalTradeButtonVisible
         {
             get
             {
                 return () =>
                 {
-                    Func<Bitmap> getBitmap = () => { return this.CaptureResetButton(captureScreen); };
+                    Func<Bitmap> getBitmap = () => { return this.CaptureRefreshGlobalTradeButton(); };
 
-                    bool isvisible = IsImageVisible(getBitmap, TradeWindow.ResetButtonHash);
+                    bool isvisible = IsImageVisible(getBitmap, TradeWindow.RefreshGlobalTrade);
                     return isvisible;
                 };
             }
@@ -92,7 +102,7 @@
             {
                 return () =>
             {
-                Func<Bitmap> getBitmap = () => { return this.CaptureConfigButton(captureScreen); };
+                Func<Bitmap> getBitmap = () => { return this.CaptureConfigButton(); };
 
                 bool isvisible = IsImageVisible(getBitmap, TradeWindow.ConfigButtonHash);
                 return isvisible;
@@ -106,9 +116,9 @@
             {
                 return () =>
             {
-                Func<Bitmap> getBitmap = () => { return this.CaptureTradeDepotLogo(captureScreen); };
+                Func<Bitmap> getBitmap = () => { return this.CaptureTradeDepotLogo(); };
 
-                bool isvisible = IsImageVisible(getBitmap, TradeWindow.TradeDepotLogoHash);
+                bool isvisible = IsImageVisible(getBitmap, 8971012661670477438);
                 return isvisible;
             };
             }
@@ -125,8 +135,8 @@
 
             ulong hash = ImageHashing.ImageHashing.AverageHash(image);
 
-            var isResetButtonVisible = ImageHashing.ImageHashing.Similarity(desiredHash, hash) > 90;
-            if (!isResetButtonVisible)
+            var isImageVisible = ImageHashing.ImageHashing.Similarity(desiredHash, hash) > 98;
+            if (!isImageVisible)
             {
                 if (Debug)
                 {
@@ -134,7 +144,72 @@
                 }
             }
 
-            return isResetButtonVisible || this.StopCapture;
+            return isImageVisible || this.StopCapture;
+        }
+
+        public Func<bool> IsEditSaleCloseButtonVisible
+        {
+            get
+            {
+                return () =>
+                {
+                    Func<Bitmap> getBitmap = () => { return this.CaptureEditSaleCloseButton(); };
+
+                    bool isvisible = IsImageVisible(getBitmap, TradeWindow.CreateSaleHash);
+                    return isvisible;
+                };
+            }
+        }
+
+        public Func<bool> IsGlobalTradeVisible
+        {
+            get
+            {
+                return () =>
+                {
+                    Func<Bitmap> getBitmap = () => { return captureScreen.SnapShot(320, 95, new Size(60, 65)); };
+
+                    bool isvisible = IsImageVisible(getBitmap, 324115654430719096);
+                    return isvisible;
+                };
+            }
+        }
+
+        public Func<bool> IsHomeButtonVisible
+        {
+            get
+            {
+                return () =>
+                {
+                    Func<Bitmap> getBitmap = () => { return captureScreen.SnapShot(60, 100, new Size(90, 90)); ; };
+
+                    bool isvisible = IsImageVisible(getBitmap, 7950016664271673) || IsImageVisible(getBitmap, 7950016664254776);
+                    return isvisible;
+                };
+            }
+        }
+
+        internal Bitmap CaptureForSaleInventory()
+        {
+            int x = 400;
+            int y = 345;
+            var size = new Size(600, 600);
+
+            return captureScreen.SnapShot(x, y, size);
+        }
+
+        public Func<bool> IsOfflineButtonVisible
+        {
+            get
+            {
+                return () =>
+                {
+                    Func<Bitmap> getBitmap = () => { return captureScreen.SnapShot(850, 800, new Size(130, 70));};
+
+                    bool isvisible = IsImageVisible(getBitmap, 35887507618856960);
+                    return isvisible;
+                };
+            }
         }
     }
 }

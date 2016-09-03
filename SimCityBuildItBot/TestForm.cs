@@ -1,9 +1,10 @@
 ﻿using Common.Logging;
+using SimCityBuildItBot.Bot;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using SimCityBuildItBot.Bot;
 
 namespace SimCityBuildItBot
 {
@@ -16,6 +17,8 @@ namespace SimCityBuildItBot
         private Touch touch;
         private CommerceResourceReader resourceReader;
         private List<CommerceItemBuild> buildItemList;
+        private TradeWindow tradeWindow;
+        private CaptureScreen captureScreen;
 
         public TestForm()
         {
@@ -23,7 +26,9 @@ namespace SimCityBuildItBot
             log = new LogToText(this.txtLog, this);
             touch = new Touch(log);
             buildingSelector = new BuildingSelector(log, touch);
-            navigateToBuilding = new NavigateToBuilding(log, touch, buildingSelector);
+            captureScreen = new CaptureScreen(log);
+            tradeWindow = new TradeWindow(captureScreen, log);
+            navigateToBuilding = new NavigateToBuilding(log, touch, buildingSelector, tradeWindow);
             resourceReader = new CommerceResourceReader(log, touch);
             buildItemList = CommerceItemBuild.CreateResourceList();
         }
@@ -60,11 +65,13 @@ namespace SimCityBuildItBot
 
         private void btnNavigateTo_Click(object sender, EventArgs e)
         {
+            this.btnNavigateTo.BackColor = Color.YellowGreen;
+
             foreach (BuildingMatch buildingMatch in BuildingMatch.Create())
             {
                 if (buildingMatch.Building.ToString() == cboBuilding.SelectedItem.ToString())
                 {
-                    navigateToBuilding.NavigateTo(buildingMatch, 1);
+                    this.btnNavigateTo.BackColor = navigateToBuilding.NavigateTo(buildingMatch, 1)? Color.Green : Color.Red;
 
                     // pick up any items
                     touch.ClickAt(Bot.Location.CentreMap);
@@ -118,6 +125,24 @@ namespace SimCityBuildItBot
         private void buildTextiles_Click(object sender, EventArgs e)
         {
             touch.Swipe(Bot.Location.ButtonLeftOuter1, Bot.Location.FactoryQueuePositionStart, Bot.Location.FactoryQueuePositionend, 10, false);
+        }
+
+        private void btnNavigateToTradeDepot_Click(object sender, EventArgs e)
+        {
+            this.btnNavigateToTradeDepot.BackColor = Color.YellowGreen;
+
+            navigateToBuilding.NavigateTo(BuildingMatch.Get(Building.TradeDepot), 1);
+
+            this.btnNavigateToTradeDepot.BackColor = this.tradeWindow.IsTradeDepotLogoVisible() ? Color.Green : Color.Red;
+        }
+
+        private void btnNavigateToGlobalTradeDepot_Click(object sender, EventArgs e)
+        {
+            this.btnNavigateToGlobalTradeDepot.BackColor = Color.YellowGreen;
+
+            navigateToBuilding.NavigateTo(BuildingMatch.Get(Building.GlobalTrade), 1);
+
+            this.btnNavigateToGlobalTradeDepot.BackColor = this.tradeWindow.IsGlobalTradeVisible() ? Color.Green : Color.Red;
         }
     }
 }
