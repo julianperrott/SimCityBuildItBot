@@ -177,11 +177,11 @@ namespace SimCityBuildItBot.Bot
 
             log.Info("The factory needs to build: " + string.Join(",", requiredResources));
 
-            var basicFactory = BuildingMatch.Create().Where(b => b.Building == Building.MassProductionFactory).FirstOrDefault();
+            var massProductionFactory = BuildingMatch.Create().Where(b => b.Building == Building.MassProductionFactory).FirstOrDefault();
 
             if (requiredResources.Count() > 0)
             {
-                SelectBuilding(basicFactory);
+                SelectBuilding(massProductionFactory);
                 BuildFactoryItemIfNeeded(FactoryResource.Metal, requiredResources);
                 touch.ClickAt(Bot.Location.RightButton);
                 BuildFactoryItemIfNeeded(FactoryResource.Wood, requiredResources);
