@@ -16,6 +16,7 @@
         HighTechFactory = 11,
         TradeDepot = 12,
         GlobalTrade = 13,
-        HomeAppliances = 14
+        HomeAppliances = 14,
+        SmallFactory = 15,
     }
 }

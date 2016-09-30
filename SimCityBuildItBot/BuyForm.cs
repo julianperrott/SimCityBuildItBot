@@ -68,7 +68,7 @@ namespace SimCityBuildItBot
 
             LoadShoppingLists();
 
-            salesman = new Salesman(touch, tradeWindow, tradePanelCapture, itemHashes, navigateToBuilding);
+            salesman = new Salesman(touch, tradeWindow, tradePanelCapture, itemHashes, navigateToBuilding, log);
             craftsman = new Craftsman(log, buildingSelector, navigateToBuilding, touch, resourceReader, buildItemList);
         }
 
@@ -410,6 +410,8 @@ namespace SimCityBuildItBot
 
         private void btnBuyItemsAndCraft_Click(object sender, EventArgs e)
         {
+            string itemSold;
+
             this.btnTradeDepotStartCapture.Enabled = false;
 
             tradeWindow.StopCapture = false;
@@ -419,7 +421,7 @@ namespace SimCityBuildItBot
             while (!tradeWindow.StopCapture)
             {
                 bool buildingItems = craftsman.Craft();
-                salesman.Sell();
+                salesman.Sell(out itemSold);
 
                 var buyTimeAvailableMilliseconds = (buildingItems ? 120 : 240) * 1000;
 
@@ -443,6 +445,13 @@ namespace SimCityBuildItBot
             }
 
             this.btnTradeDepotStartCapture.Enabled = true;
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+
+            Process.GetCurrentProcess().Kill();
         }
     }
 }

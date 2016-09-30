@@ -25,6 +25,7 @@
 
 
             buildingMatches.Add(new BuildingMatch { Building = Building.BasicFactory, BuildingType = BuildingType.Factory, Fragments = new List<string> { "bas", "sic", "ic fact" } });
+            buildingMatches.Add(new BuildingMatch { Building = Building.SmallFactory, BuildingType = BuildingType.Factory, Fragments = new List<string> { "small", "mall", "ll fact" } });
             buildingMatches.Add(new BuildingMatch { Building = Building.MassProductionFactory, BuildingType = BuildingType.Factory, Fragments = new List<string> { "mass", "prod", "ion fact" } });
             buildingMatches.Add(new BuildingMatch { Building = Building.HighTechFactory, BuildingType = BuildingType.Factory, Fragments = new List<string> { "high", "tech", "ech fact" } });
 

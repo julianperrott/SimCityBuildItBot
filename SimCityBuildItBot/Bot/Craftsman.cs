@@ -15,7 +15,7 @@ namespace SimCityBuildItBot.Bot
         private CommerceResourceReader resourceReader;
         private List<CommerceItemBuild> buildItemList;
 
-        public Craftsman(ILog log,BuildingSelector buildingSelector,
+        public Craftsman(ILog log, BuildingSelector buildingSelector,
          NavigateToBuilding navigateToBuilding,
          Touch touch,
          CommerceResourceReader resourceReader,
@@ -28,8 +28,11 @@ namespace SimCityBuildItBot.Bot
             this.resourceReader = resourceReader;
             this.buildItemList = buildItemList;
         }
-
         private List<Bot.FactoryResource> BuildItem(CommerceItem item)
+        {
+            return BuildItem(item, Bot.Location.ProductionQueue);
+        }
+        private List<Bot.FactoryResource> BuildItem(CommerceItem item, Bot.Location productionLocation)
         {
             CommerceItemBuild buildItem = buildItemList.Where(b => b.CommerceItem == item).FirstOrDefault();
             if (buildItem == null)
@@ -51,11 +54,25 @@ namespace SimCityBuildItBot.Bot
             log.Info("I can ...");
 
             log.Info("Building item " + buildItem.Button.ToString());
-            touch.Swipe(buildItem.Button, buildItem.Button, Bot.Location.ProductionQueue, 4, true);
+            touch.Swipe(buildItem.Button, buildItem.Button, productionLocation, 4, true);
 
             var requiredFinal = resourceReader.GetRequiredResources(buildItem.Button, buildItem.Resources);
             log.Info("Finished build item, I need to build: " + string.Join(",", requiredFinal));
             return requiredFinal.ToList();
+        }
+
+        public void PickUpItems()
+        {
+            touch.ClickAt(Bot.Location.CentreMap, 100);
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (buildingSelector.GetBuilding() != null)
+                {
+                    break;
+                }
+                touch.ClickAt(Bot.Location.CentreMap, 100);
+            }
         }
 
         private void SelectBuilding(BuildingMatch buildingMatch)
@@ -63,7 +80,7 @@ namespace SimCityBuildItBot.Bot
             navigateToBuilding.NavigateTo(buildingMatch, 1);
 
             // pick up any items
-            touch.ClickAt(Bot.Location.CentreMap);
+            PickUpItems();
 
             // reselect
             navigateToBuilding.NavigateTo(buildingMatch, 1);
@@ -102,7 +119,7 @@ namespace SimCityBuildItBot.Bot
             if (factoryList.Contains(resource))
             {
                 log.Info("Picking up items");
-                touch.ClickAt(Bot.Location.CentreMap); // pick up any items
+                PickUpItems();
             }
             else
             {
@@ -111,8 +128,7 @@ namespace SimCityBuildItBot.Bot
 
             if (alwaysBuildItem || factoryList.Contains(resource))
             {
-                log.Info("Trying to build " + resource.ToString());
-                BuildingMatch buildingMatch = buildingSelector.SelectABuilding();
+                BuildingMatch buildingMatch = buildingSelector.SelectABuilding(", Trying to build " + resource.ToString());
                 if (buildingMatch != null && buildingMatch.BuildingType == BuildingType.Factory)
                 {
                     var button = GetResourceLocation(resource);
@@ -121,10 +137,106 @@ namespace SimCityBuildItBot.Bot
             }
         }
 
+        internal bool CraftLevel12()
+        {
+            var startFactory = BuildingMatch.Create().Where(b => b.Building == Building.BasicFactory).FirstOrDefault();
+
+            SelectBuilding(startFactory);
+            for (var i = 0; i < 8; i++)
+            {
+                PickupItemsFromNextFactory();
+            }
+            SelectBuilding(startFactory);
+
+            // Harware store
+            var items1 = BuildItem(CommerceItem.Hammer, Bot.Location.ProductionQueueL8);
+
+
+            // Building Supplies Store
+            BuildItem(CommerceItem.Nails, Bot.Location.ProductionQueueL8);
+            BuildItem(CommerceItem.Nails, Bot.Location.ProductionQueueL8);
+            var items3 = BuildItem(CommerceItem.Nails, Bot.Location.ProductionQueueL8);
+
+            //Furniture store
+            var items4=  BuildItem(CommerceItem.Chair, Bot.Location.ProductionQueueL8);
+
+            // Farmers market
+            var items2 = BuildItem(CommerceItem.Vegetable, Bot.Location.ProductionQueueL8);
+
+            var requiredResources = items1.Concat(items2)
+                .Concat(items3)
+                .Concat(items4)
+                .Distinct()
+                .Where(r => r != FactoryResource.Ignore);
+
+            log.Info("The factory needs to build: " + string.Join(",", requiredResources));
+
+            if (requiredResources.Count() > 0)
+            {
+                SelectBuilding(startFactory);
+
+                if (requiredResources.Contains(FactoryResource.Metal))
+                {
+                    BuildAtAllL12Factories(FactoryResource.Metal);
+                }
+                else if (requiredResources.Contains(FactoryResource.Wood))
+                {
+                    BuildAtAllL12Factories(FactoryResource.Wood);
+                }
+                else
+                {
+                    BuildFactoryItem(FactoryResource.Seeds);
+                    touch.ClickAt(Bot.Location.RightButton);
+                    BuildFactoryItem(FactoryResource.Seeds);
+                    touch.ClickAt(Bot.Location.RightButton);
+                    BuildFactoryItem(FactoryResource.Seeds);
+                    touch.ClickAt(Bot.Location.RightButton);
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public bool Craft()
         {
+            var massProductionFactory = BuildingMatch.Create().Where(b => b.Building == Building.MassProductionFactory).FirstOrDefault();
+
+            SelectBuilding(massProductionFactory);
+            for (var i = 0; i < 8; i++)
+            {
+                PickupItemsFromNextFactory();
+            }
+
             // Harware store
             var items1 = BuildItem(CommerceItem.Hammer);
+
+            //Furniture store
+            var items2 = BuildItem(CommerceItem.Table);
+            if (items2.Contains(FactoryResource.Ignore))
+            {
+                items2 = BuildItem(CommerceItem.Chair);
+            }
+
+            // Donut shop
+            //var items6 = BuildItem(CommerceItem.BreadRoll);
+            //items6 = BuildItem(CommerceItem.GreenSmoothie);
+            var items6 = BuildItem(CommerceItem.Donut);
+
+            // Home appliances
+            var items8 = BuildItem(CommerceItem.BBQGrill);
+
+            // Farmers market
+            var items4 = BuildItem(CommerceItem.FlourBag);
+
+            // Gardening supplies
+            var items7 = BuildItem(CommerceItem.TreeSapling);
+            if (items7.Contains(FactoryResource.Ignore))
+            {
+                items7 = BuildItem(CommerceItem.GardenFurniture);
+            }
 
             // Fashion store
             var items5 = BuildItem(CommerceItem.Cap);
@@ -137,38 +249,13 @@ namespace SimCityBuildItBot.Bot
                 items5 = BuildItem(CommerceItem.Watch);
             }
 
-            var items8 = BuildItem(CommerceItem.BBQGrill);
-
-            // Donut shop
-            var items6 = BuildItem(CommerceItem.GreenSmoothie);
-            if (items6.Contains(FactoryResource.Ignore))
-            {
-               items6 = BuildItem(CommerceItem.Donut);
-            }
-
             // Fast food restaurant
             BuildItem(CommerceItem.IceCreamSandwich);
 
-            //Furniture store
-            var items2 = BuildItem(CommerceItem.Table);
-            if (items2.Contains(FactoryResource.Ignore))
-            {
-                items2 = BuildItem(CommerceItem.Chair);
-            }
-
             // Building Supplies Store
             BuildItem(CommerceItem.Nails);
+            BuildItem(CommerceItem.Nails);
             var items3 = BuildItem(CommerceItem.Nails);
-
-            // Gardening supplies
-            var items7 = BuildItem(CommerceItem.Grass);
-            if (items7.Contains(FactoryResource.Ignore))
-            {
-                items7 = BuildItem(CommerceItem.GardenFurniture);
-            }
-
-            // Farmers market
-            var items4 = BuildItem(CommerceItem.FlourBag);
 
             var requiredResources = items1.Concat(items2)
                 .Concat(items3).Concat(items4).Concat(items5).Concat(items6).Concat(items7).Concat(items8)
@@ -177,29 +264,39 @@ namespace SimCityBuildItBot.Bot
 
             log.Info("The factory needs to build: " + string.Join(",", requiredResources));
 
-            var massProductionFactory = BuildingMatch.Create().Where(b => b.Building == Building.MassProductionFactory).FirstOrDefault();
-
             if (requiredResources.Count() > 0)
             {
                 SelectBuilding(massProductionFactory);
-                BuildFactoryItemIfNeeded(FactoryResource.Metal, requiredResources);
-                touch.ClickAt(Bot.Location.RightButton);
-                BuildFactoryItemIfNeeded(FactoryResource.Wood, requiredResources);
-                touch.ClickAt(Bot.Location.RightButton);
 
-                var slowItem = FactoryResource.Textiles;
-                BuildFactoryItem(slowItem);
-                touch.ClickAt(Bot.Location.RightButton);
-                BuildFactoryItem(slowItem);
-                touch.ClickAt(Bot.Location.RightButton);
-                BuildFactoryItem(slowItem);
-                touch.ClickAt(Bot.Location.RightButton);
+                if (requiredResources.Contains(FactoryResource.Metal))
+                {
+                    BuildAtAllFactories(FactoryResource.Metal);
+                }
+                else if (requiredResources.Contains(FactoryResource.Wood))
+                {
+                    BuildAtAllFactories(FactoryResource.Wood);
+                }
+                else
+                {
+                    BuildFactoryItemIfNeeded(FactoryResource.Metal, requiredResources);
+                    touch.ClickAt(Bot.Location.RightButton);
+                    BuildFactoryItemIfNeeded(FactoryResource.Wood, requiredResources);
+                    touch.ClickAt(Bot.Location.RightButton);
 
-                BuildFactoryItem(FactoryResource.SugarAndSpices);
-                touch.ClickAt(Bot.Location.RightButton);
-                BuildFactoryItemIfNeeded(FactoryResource.Seeds, requiredResources);
-                touch.ClickAt(Bot.Location.RightButton);
-                BuildFactoryItemIfNeeded(FactoryResource.Metal, requiredResources);
+                    var slowItem = FactoryResource.Textiles;
+                    BuildFactoryItem(slowItem);
+                    touch.ClickAt(Bot.Location.RightButton);
+                    BuildFactoryItem(slowItem);
+                    touch.ClickAt(Bot.Location.RightButton);
+                    BuildFactoryItem(slowItem);
+                    touch.ClickAt(Bot.Location.RightButton);
+
+                    BuildFactoryItem(FactoryResource.SugarAndSpices);
+                    touch.ClickAt(Bot.Location.RightButton);
+                    BuildFactoryItemIfNeeded(FactoryResource.Seeds, requiredResources);
+                    touch.ClickAt(Bot.Location.RightButton);
+                    BuildFactoryItemIfNeeded(FactoryResource.Metal, requiredResources);
+                }
 
                 return true;
             }
@@ -207,6 +304,121 @@ namespace SimCityBuildItBot.Bot
             {
                 return false;
             }
+        }
+
+        private void BuildAtAllFactories(FactoryResource resource)
+        {
+            BuildFactoryItem(resource);
+            touch.ClickAt(Bot.Location.RightButton);
+            BuildFactoryItem(resource);
+            touch.ClickAt(Bot.Location.RightButton);
+
+
+            touch.ClickAt(Bot.Location.RightButton);
+            touch.ClickAt(Bot.Location.RightButton);
+            touch.ClickAt(Bot.Location.RightButton);
+            touch.ClickAt(Bot.Location.RightButton);
+
+            BuildFactoryItem(resource);
+            touch.ClickAt(Bot.Location.RightButton);
+            BuildFactoryItem(resource); ;
+        }
+
+        private void PickupItemsFromNextFactory()
+        {
+            touch.ClickAt(Bot.Location.RightButton);
+            PickUpItems();
+            buildingSelector.SelectABuilding(" picking up factory Items");
+        }
+
+        public bool CraftLevel8()
+        {
+            var startFactory = BuildingMatch.Create().Where(b => b.Building == Building.SmallFactory).FirstOrDefault();
+
+            SelectBuilding(startFactory);
+            for (var i = 0; i < 8; i++)
+            {
+                PickupItemsFromNextFactory();
+            }
+            SelectBuilding(startFactory);
+
+            // Harware store
+            var items1 = BuildItem(CommerceItem.Hammer, Bot.Location.ProductionQueueL8);
+
+            // Farmers market
+            var items2 = BuildItem(CommerceItem.Vegetable, Bot.Location.ProductionQueueL8);
+
+            // Building Supplies Store
+            BuildItem(CommerceItem.Nails, Bot.Location.ProductionQueueL8);
+            BuildItem(CommerceItem.Nails, Bot.Location.ProductionQueueL8);
+            var items3 = BuildItem(CommerceItem.Nails, Bot.Location.ProductionQueueL8);
+
+            var requiredResources = items1.Concat(items2)
+                .Concat(items3)
+                .Distinct()
+                .Where(r => r != FactoryResource.Ignore);
+
+            log.Info("The factory needs to build: " + string.Join(",", requiredResources));
+
+            if (requiredResources.Count() > 0)
+            {
+                SelectBuilding(startFactory);
+
+                if (requiredResources.Contains(FactoryResource.Metal))
+                {
+                    BuildAtAllL8Factories(FactoryResource.Metal);
+                }
+                else if (requiredResources.Contains(FactoryResource.Wood))
+                {
+                    BuildAtAllL8Factories(FactoryResource.Wood);
+                }
+                else
+                {
+                    BuildFactoryItem(FactoryResource.Seeds);
+                    touch.ClickAt(Bot.Location.RightButton);
+                    BuildFactoryItem(FactoryResource.Seeds);
+                    touch.ClickAt(Bot.Location.RightButton);
+                    BuildFactoryItem(FactoryResource.Seeds);
+                    touch.ClickAt(Bot.Location.RightButton);
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void BuildAtAllL8Factories(FactoryResource resource)
+        {
+            BuildFactoryItem(resource);
+            touch.ClickAt(Bot.Location.RightButton);
+            BuildFactoryItem(resource);
+            touch.ClickAt(Bot.Location.RightButton);
+            BuildFactoryItem(resource);
+            touch.ClickAt(Bot.Location.RightButton);
+            BuildFactoryItem(resource);
+            touch.ClickAt(Bot.Location.RightButton);
+            BuildFactoryItem(resource);
+            touch.ClickAt(Bot.Location.RightButton);
+            BuildFactoryItem(resource);
+        }
+
+        private void BuildAtAllL12Factories(FactoryResource resource)
+        {
+            BuildFactoryItem(resource);
+            touch.ClickAt(Bot.Location.RightButton);
+            BuildFactoryItem(resource);
+            touch.ClickAt(Bot.Location.RightButton);
+            BuildFactoryItem(resource);
+            touch.ClickAt(Bot.Location.RightButton);
+            BuildFactoryItem(resource);
+            touch.ClickAt(Bot.Location.RightButton);
+            BuildFactoryItem(resource);
+            touch.ClickAt(Bot.Location.RightButton);
+            BuildFactoryItem(resource);
+            touch.ClickAt(Bot.Location.RightButton);
+            BuildFactoryItem(resource);
         }
     }
 }

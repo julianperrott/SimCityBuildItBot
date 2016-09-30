@@ -13,6 +13,8 @@
         {
             this.textBox = textBox;
             this.form = form;
+
+            BotApplication.log = this; // use DI instead
         }
 
         public IVariablesContext GlobalVariablesContext
@@ -236,8 +238,13 @@
 
         public void Info(object message)
         {
-            this.textBox.Text += DateTime.Now.ToLongTimeString() + ": " + message + Environment.NewLine;
-            form.Text = DateTime.Now.ToLongTimeString();
+            if (this.textBox.Text.Length>5000)
+            {
+                this.textBox.Text = this.textBox.Text.Substring(0, 5000);
+           }
+            
+            this.textBox.Text = DateTime.Now.ToLongTimeString() + ": " + message + Environment.NewLine+ this.textBox.Text;
+            Trace(message);
             this.textBox.ScrollToCaret();
             System.Diagnostics.Debug.WriteLine(message);
             Application.DoEvents();
@@ -290,7 +297,10 @@
 
         public void Trace(object message)
         {
-            throw new NotImplementedException();
+            if (form != null)
+            {
+                form.Text = DateTime.Now.ToLongTimeString() + " " + message;
+            }
         }
 
         public void Trace(Action<FormatMessageHandler> formatMessageCallback, Exception exception)

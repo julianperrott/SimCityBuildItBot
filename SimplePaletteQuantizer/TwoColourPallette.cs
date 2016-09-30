@@ -52,7 +52,7 @@ namespace SimplePaletteQuantizer
 
         public List<string> GetClosest2Colours(Bitmap sourceImage, Dictionary<string, Color> colors)
         {
-            Int32 parallelTaskCount = 8;
+            Int32 parallelTaskCount = 1;
             Image targetImage = ImageBuffer.QuantizeImage(ToImage(sourceImage), activeQuantizer, null, 2, parallelTaskCount);
             return targetImage.Palette.Entries.Select(e => GetClosestColor(colors, e)).ToList();
         }

@@ -1,6 +1,10 @@
-StorageBars
-StorageCamera
-StorageLock
-DozerBlade
-DozerExhaust
-DozerWheel
+Hammer
+Shovel
+MeasuringTape
+Nails
+Planks
+Bricks
+Textiles
+Grass
+Glue
+Vegetables

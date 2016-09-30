@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Logging;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -13,31 +14,45 @@ namespace SimCityBuildItBot.Bot
         private TradePanelCapture tradePanelCapture;
         private ItemHashes itemHashes;
         private NavigateToBuilding navigateToBuilding;
+        private ILog log;
 
         private int swipeSteps = 10;
+
+        public enum SaleResult
+        {
+            Other,
+            SoldItem,
+            NothingToSell,
+            NoSpace
+        }
+
 
         public Salesman(Touch touch,
          TradeWindow tradeWindow,
          TradePanelCapture tradePanelCapture,
          ItemHashes itemHashes,
-         NavigateToBuilding navigateToBuilding)
+         NavigateToBuilding navigateToBuilding, ILog log)
         {
             this.touch = touch;
             this.tradeWindow = tradeWindow;
             this.tradePanelCapture = tradePanelCapture;
             this.itemHashes = itemHashes;
             this.navigateToBuilding = navigateToBuilding;
+            this.log = log;
         }
 
-        public bool SellAnItem()
+        public SaleResult SellAnItem(out string itemSold)
         {
+            itemSold = string.Empty;
+
             for (int i = 0; i < 3; i++)
             {
                 CollectSales();
 
-                if (PutItemOnSale())
+                var result = PutItemOnSale(out itemSold);
+                if (result == SaleResult.SoldItem || result== SaleResult.NothingToSell)
                 {
-                    return true;
+                    return result;
                 }
 
                 if (i < 2)
@@ -47,11 +62,13 @@ namespace SimCityBuildItBot.Bot
                 }
             }
 
-            return false;
+            return SaleResult.Other;
         }
 
-        private bool PutItemOnSale()
+        private SaleResult PutItemOnSale(out string itemSold)
         {
+            itemSold = string.Empty;
+
             // get images of trade boxes
             var panels = itemHashes.ProcessCaptureImages(CaptureImagesTradeDepot());
 
@@ -59,7 +76,7 @@ namespace SimCityBuildItBot.Bot
             var newSale = panels.Where(d => d.Item.ToLower().Contains("TradeDepotCreateNewSale".ToLower())).FirstOrDefault();
             if (newSale == null)
             {
-                return false;
+                return SaleResult.NoSpace;
             }
 
             // click on the box
@@ -71,7 +88,7 @@ namespace SimCityBuildItBot.Bot
             // check that the create sale window is visible
             if (!tradeWindow.IsEditSaleCloseButtonVisible())
             {
-                return false;
+                return SaleResult.Other;
             }
 
             // find an item to sell from the create sale inventory
@@ -79,7 +96,8 @@ namespace SimCityBuildItBot.Bot
             var saleItem = GetItemToSell(saleItems);
             if (saleItem == null)
             {
-                return true;
+                log.Debug("Nothing to sell" );
+                return SaleResult.NothingToSell;
             }
 
             // click on the item
@@ -96,22 +114,24 @@ namespace SimCityBuildItBot.Bot
             touch.ClickAt(Bot.Location.CreateSalePutOnSale);
 
             Debug.WriteLine(DateTime.Now.ToShortTimeString() + " Sold: " + saleItem.Item);
+            log.Debug("Sold: " + saleItem.Item);
 
-            return true;
+            itemSold = saleItem.Item;
+            return SaleResult.SoldItem;
         }
 
         private PanelLocation GetItemToSell(List<PanelLocation> panels)
         {
-            var itemsToSell = new List<string> { "chairs", "nails", "flour", "watch", "hammer", "donut", "glass", "chemicals", "gardenfurniture", "shoes","grass","bricks","cement","cookingutensils","cap","table","icecremesandwich", "greenSmoothie" };
-
+            //var itemsToSell = new List<string> { "vegetables","metal","nails", "chairs",  "flour", "watch", "hammer", "donut", "glass", "chemicals", "gardenfurniture", "shoes","grass","bricks","cement","cap","table","icecremesandwich", "greenSmoothie" };
+            var itemsToSell = new List<string> {  "metal", "nails","wood","hammer" };
             var items = itemHashes.ProcessCaptureImages(panels);
 
-            foreach (var itemToSell in itemsToSell)
+            foreach (var item in items)
             {
-                var match = items.Where(item => item.Item.ToLower().Contains(itemToSell)).FirstOrDefault();
+                var match = itemsToSell.Where(itemToSell => item.Item.ToLower().Contains(itemToSell)).FirstOrDefault();
                 if (match != null)
                 {
-                    return match;
+                    return item;
                 }
             }
 
@@ -153,16 +173,18 @@ namespace SimCityBuildItBot.Bot
             return bmpImage.Clone(cropArea, bmpImage.PixelFormat);
         }
 
-        public bool Sell()
+        public SaleResult Sell(out string itemSold)
         {
+            itemSold = string.Empty;
+
             navigateToBuilding.NavigateTo(BuildingMatch.Get(Building.TradeDepot), 1);
 
             if (!this.tradeWindow.IsTradeDepotLogoVisible())
             {
-                return false;
+                return SaleResult.Other;
             }
 
-            bool result = this.SellAnItem();
+            var result = this.SellAnItem(out itemSold);
 
             touch.ClickAt(Bot.Location.HomeButton);
 

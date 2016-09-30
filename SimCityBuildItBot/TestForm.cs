@@ -35,7 +35,7 @@ namespace SimCityBuildItBot
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
-            buildingSelector.SelectABuilding();
+            buildingSelector.SelectABuilding("");
         }
 
         private void TestForm_Load(object sender, EventArgs e)

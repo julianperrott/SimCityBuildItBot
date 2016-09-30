@@ -27,6 +27,7 @@
                 case Location.ButtonRightInner3: return new Point(1280, 680);
 
                 case Location.ProductionQueue: return new Point(525, 972);
+                case Location.ProductionQueueL8: return new Point(720, 972);
                 case Location.FactoryQueuePositionStart: return new Point(456, 944);
                 case Location.FactoryQueuePositionend: return new Point(1471, 932);
 
@@ -50,7 +51,7 @@
 
                 case Location.GlobalTradeOtherCity: return new Point(1700, 1040);
 
-                case Location.HomeTradeDepot: return new Point(318, 271);
+                case Location.HomeTradeDepot: return new Point(250, 261);
                 case Location.TradeDepotClose: return new Point(1593, 90);
                 case Location.GlobalTradeDepotClose: return new Point(1593, 90);
 
@@ -98,6 +99,7 @@
         ButtonRightInner3,
 
         ProductionQueue,
+        ProductionQueueL8,
         FactoryQueuePositionStart,
         FactoryQueuePositionend,
 

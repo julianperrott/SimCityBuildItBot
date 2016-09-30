@@ -62,6 +62,7 @@
             this.listBought = new System.Windows.Forms.ListBox();
             this.btnShoppingList = new System.Windows.Forms.Button();
             this.btnBuyItemsAndCraft = new System.Windows.Forms.Button();
+            this.btnExit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb2)).BeginInit();
@@ -378,11 +379,22 @@
             this.btnBuyItemsAndCraft.UseVisualStyleBackColor = true;
             this.btnBuyItemsAndCraft.Click += new System.EventHandler(this.btnBuyItemsAndCraft_Click);
             // 
+            // btnExit
+            // 
+            this.btnExit.Location = new System.Drawing.Point(542, 21);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(98, 65);
+            this.btnExit.TabIndex = 58;
+            this.btnExit.Text = "Exit";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
             // BuyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1382, 725);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnBuyItemsAndCraft);
             this.Controls.Add(this.btnShoppingList);
             this.Controls.Add(this.groupBox2);
@@ -460,5 +472,6 @@
         private System.Windows.Forms.TextBox txtVisit;
         private System.Windows.Forms.Button btnShoppingList;
         private System.Windows.Forms.Button btnBuyItemsAndCraft;
+        private System.Windows.Forms.Button btnExit;
     }
 }

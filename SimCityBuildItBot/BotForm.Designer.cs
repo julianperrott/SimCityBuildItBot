@@ -34,6 +34,10 @@
             this.txtRequired = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.btnBuy = new System.Windows.Forms.Button();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.btnSellTheCraft = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtLog
@@ -79,7 +83,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(116, 12);
+            this.button1.Location = new System.Drawing.Point(366, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(98, 65);
             this.button1.TabIndex = 20;
@@ -89,7 +93,7 @@
             // 
             // btnBuy
             // 
-            this.btnBuy.Location = new System.Drawing.Point(220, 12);
+            this.btnBuy.Location = new System.Drawing.Point(487, 12);
             this.btnBuy.Name = "btnBuy";
             this.btnBuy.Size = new System.Drawing.Size(98, 65);
             this.btnBuy.TabIndex = 21;
@@ -97,11 +101,55 @@
             this.btnBuy.UseVisualStyleBackColor = true;
             this.btnBuy.Click += new System.EventHandler(this.btnBuy_Click);
             // 
+            // btnExit
+            // 
+            this.btnExit.Location = new System.Drawing.Point(756, 12);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(98, 65);
+            this.btnExit.TabIndex = 22;
+            this.btnExit.Text = "Exit";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // btnSellTheCraft
+            // 
+            this.btnSellTheCraft.Location = new System.Drawing.Point(652, 12);
+            this.btnSellTheCraft.Name = "btnSellTheCraft";
+            this.btnSellTheCraft.Size = new System.Drawing.Size(98, 65);
+            this.btnSellTheCraft.TabIndex = 23;
+            this.btnSellTheCraft.Text = "Sell then Craft  L34";
+            this.btnSellTheCraft.UseVisualStyleBackColor = true;
+            this.btnSellTheCraft.Click += new System.EventHandler(this.btnSellTheCraft_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(116, 12);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(98, 65);
+            this.button2.TabIndex = 24;
+            this.button2.Text = "Start Crafting L8";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.L12Craft_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(220, 12);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(98, 65);
+            this.button3.TabIndex = 25;
+            this.button3.Text = "Sell then Craft L12";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.L12SellAndCraft_Click);
+            // 
             // BotForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(885, 795);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnSellTheCraft);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnBuy);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.txtRequired);
@@ -122,5 +170,9 @@
         private System.Windows.Forms.TextBox txtRequired;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnBuy;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Button btnSellTheCraft;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
     }
 }

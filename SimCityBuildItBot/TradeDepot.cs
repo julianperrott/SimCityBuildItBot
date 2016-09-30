@@ -65,7 +65,7 @@ namespace SimCityBuildItBot
 
             itemHashes = new ItemHashes(pictureBoxes, textBoxes);
             itemHashes.ReadHashes();
-            salesman = new Salesman(touch, tradeWindow, tradePanelCapture, itemHashes, navigateToBuilding);
+            salesman = new Salesman(touch, tradeWindow, tradePanelCapture, itemHashes, navigateToBuilding, log);
         }
 
         private void btnCaptureImages_Click(object sender, EventArgs e)
@@ -78,24 +78,7 @@ namespace SimCityBuildItBot
 
                 var locs = tradePanelCapture.FindPanelStartsGlobalTrade(image, tops);
 
-                using (var graphics = Graphics.FromImage(image))
-                {
-                    locs.ForEach(p =>
-                    {
-                        for (int j = 0; j < 5; j++)
-                        {
-                            graphics.DrawLine(redPen, p.Start.X, p.Start.Y - 15 + j, p.Start.X + p.Width, p.Start.Y - 15 + j);
-                        }
-                    });
-
-                    locs.ForEach(p =>
-                    {
-                        var xx = p.ImageGlobalTradePoint.X;
-                        var yy = p.ImageGlobalTradePoint.Y;
-                        var size = p.ImageGlobalTradeSize;
-                        graphics.DrawPolygon(redPen, new Point[] { p.ImageGlobalTradePoint, new Point(xx + size.Width, yy), new Point(xx + size.Width, yy + size.Height), new Point(xx, yy + size.Height) });
-                    });
-                }
+                DrawDebugLines(image, locs);
 
                 ImageViewer.ShowBitmap(image, this.pictureBoxAll);
             }
@@ -310,31 +293,7 @@ namespace SimCityBuildItBot
 
                 var locs = tradePanelCapture.FindPanelStartsTradeDepot(image, tops);
 
-                using (var graphics = Graphics.FromImage(image))
-                {
-                    var drawOnLine = true;
-                    locs.ForEach(p =>
-                    {
-                        for (int j = 0; j < 5; j++)
-                        {
-                            graphics.DrawLine(redPen, p.Start.X, p.Start.Y - 15 + j, p.Start.X + p.Width, p.Start.Y - 15 + j);
-                        }
-
-                        if (drawOnLine)
-                        {
-                            graphics.DrawLine(purplePen, p.Start.X, p.Start.Y, p.Start.X + p.Width, p.Start.Y);
-                            drawOnLine = false;
-                        }
-                    });
-
-                    locs.ForEach(p =>
-                    {
-                        var xx = p.ImageTradeDepotPoint.X;
-                        var yy = p.ImageTradeDepotPoint.Y;
-                        var size = p.ImageTradeDepotSize;
-                        graphics.DrawPolygon(redPen, new Point[] { p.ImageTradeDepotPoint, new Point(xx + size.Width, yy), new Point(xx + size.Width, yy + size.Height), new Point(xx, yy + size.Height) });
-                    });
-                }
+                DrawDebugLines(image, locs);
 
                 ImageViewer.ShowBitmap(image, this.pictureBoxAll);
 
@@ -636,10 +595,12 @@ namespace SimCityBuildItBot
 
         private void btnMakeSale_Click(object sender, EventArgs e)
         {
+            string itemSold;
+
             this.btnMakeSale.BackColor = Color.YellowGreen;
             Application.DoEvents();
 
-            this.btnMakeSale.BackColor = salesman.Sell() ? Color.Green : Color.Red;
+            this.btnMakeSale.BackColor = salesman.Sell(out itemSold) == Salesman.SaleResult.SoldItem ? Color.Green : Color.Red;
         }
 
       
@@ -647,9 +608,51 @@ namespace SimCityBuildItBot
         private void btnCaptureInventory_Click(object sender, EventArgs e)
         {
             var image = this.tradeWindow.CaptureForSaleInventory();
-            ImageViewer.ShowBitmap(image, this.pictureBoxAll);
 
-            var panels = itemHashes.ProcessCaptureImages(this.tradePanelCapture.CaptureCreateSaleItems());
+
+            var locs = this.tradePanelCapture.CaptureCreateSaleItems();
+
+            using (var graphics = Graphics.FromImage(image))
+            {
+                locs.ForEach(p =>
+                {
+                    var size = p.ImageGlobalTradeSize;
+                    graphics.DrawPolygon(redPen, new Point[] { p.Start, new Point(p.Start.X + size.Width, p.Start.Y), new Point(p.Start.X + size.Width, p.Start.Y + size.Height), new Point(p.Start.X, p.Start.Y + size.Height) });
+                });
+            }
+
+            ImageViewer.ShowBitmap(image, this.pictureBoxAll);
+            var panels = itemHashes.ProcessCaptureImages(locs);
+        }
+
+        private static void DrawDebugLines(Bitmap image, List<PanelLocation> locs)
+        {
+            using (var graphics = Graphics.FromImage(image))
+            {
+                var drawOnLine = true;
+
+                locs.ForEach(p =>
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        graphics.DrawLine(redPen, p.Start.X, p.Start.Y - 15 + j, p.Start.X + p.Width, p.Start.Y - 15 + j);
+                    }
+
+                    if (drawOnLine)
+                    {
+                        graphics.DrawLine(purplePen, p.Start.X, p.Start.Y, p.Start.X + p.Width, p.Start.Y);
+                        drawOnLine = false;
+                    }
+                });
+
+                locs.ForEach(p =>
+                {
+                    var xx = p.ImageGlobalTradePoint.X;
+                    var yy = p.ImageGlobalTradePoint.Y;
+                    var size = p.ImageGlobalTradeSize;
+                    graphics.DrawPolygon(redPen, new Point[] { p.ImageGlobalTradePoint, new Point(xx + size.Width, yy), new Point(xx + size.Width, yy + size.Height), new Point(xx, yy + size.Height) });
+                });
+            }
         }
 
         private void btnCaptureGlobalTrade_Click(object sender, EventArgs e)
@@ -666,6 +669,25 @@ namespace SimCityBuildItBot
         {
             this.btnIsOfflineButtonVisible.BackColor = this.tradeWindow.IsOfflineButtonVisible() ? Color.Green : Color.Red;
             
+
+        }
+
+        Point pictureBoxAllLocation;
+
+        private void btnToggle_Click(object sender, EventArgs e)
+        {
+            if (pictureBoxAll.Location.Y>0)
+            {
+                pictureBoxAllLocation = pictureBoxAll.Location;
+                pictureBoxAll.Location = new Point(0, 0);
+                pictureBoxAll.BringToFront();
+                pictureBoxAll.Height = this.Height;
+                btnToggle.BringToFront();
+            }
+            else
+            {
+                pictureBoxAll.Location = pictureBoxAllLocation;
+            }
         }
     }
 }

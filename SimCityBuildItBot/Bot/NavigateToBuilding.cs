@@ -5,6 +5,8 @@
 
     public class NavigateToBuilding
     {
+        public static Building FactorySwitch = Building.MassProductionFactory;
+
         private BuildingSelector buildingSelector;
         private ILog log;
         private readonly Touch touch;
@@ -26,7 +28,7 @@
                 return false;
             }
 
-            log.Info("looking for building: " + desiredBuilding.Building.ToString());
+            //log.Info("looking for building: " + desiredBuilding.Building.ToString());
 
             GoHomeIfAtAnotherCity();
 
@@ -66,7 +68,7 @@
                 return NavigateTo(desiredBuilding, depth++);
             }
 
-            var buildingFound = buildingSelector.SelectABuilding();
+            var buildingFound = buildingSelector.SelectABuilding(" going to [" + desiredBuilding.Building.ToString()+"]");
             if (buildingFound == null)
             {
                 log.Info("failed to find building: " + desiredBuilding.Building.ToString());
@@ -81,7 +83,7 @@
             }
 
             // do we need to switch building types
-            if ((buildingFound.Building == Building.MassProductionFactory || buildingFound.Building == Building.HardwareStore)
+            if ((buildingFound.Building == NavigateToBuilding.FactorySwitch || buildingFound.Building == Building.HardwareStore)
             && buildingFound.BuildingType != desiredBuilding.BuildingType
             )
             {

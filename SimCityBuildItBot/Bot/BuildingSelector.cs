@@ -21,7 +21,7 @@
         private CaptureScreen screen;
         private List<BuildingMatch> buildingMatches = BuildingMatch.Create();
 
-        public BuildingMatch SelectABuilding()
+        public BuildingMatch SelectABuilding(string suffixMessage)
         {
             var maxCnt = 10;
             BuildingMatch building = null;
@@ -32,14 +32,14 @@
                 building = GetBuilding();
                 if (building != null)
                 {
-                    this.log.Info("Found building: " + building.Building.ToString());
+                    this.log.Info("At [" + building.Building.ToString()+"]"+ suffixMessage);
                     //this.log.Info("Exit");
                     break;
                 }
 
                 this.log.Info("No building selected, cnt = " + cnt);
 
-                touch.ClickAt(Location.CentreMap);
+                touch.ClickAt(Location.CentreMap,100);
             }
 
             if (building == null)

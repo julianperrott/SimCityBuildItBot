@@ -46,6 +46,11 @@
 
         public void ClickAt(Location location)
         {
+            ClickAt(location, 400);
+        }
+
+        public void ClickAt(Location location, int waitms)
+        {
             //log.Info("clicking " + location.ToString());
 
             var point = Constants.GetPoint(location);
@@ -54,7 +59,7 @@
 
             System.Diagnostics.Debug.WriteLine("Clicking " + location.ToString());
 
-            ClickAt(point);
+            ClickAt(point, waitms);
         }
 
         public void LongPress(Location location, int seconds)
@@ -74,13 +79,18 @@
 
         public void ClickAt(Point point)
         {
+            ClickAt(point, 400);
+        }
+
+        public void ClickAt(Point point, int waitms)
+        {
             this.TouchDown();
             this.MoveTo(point);
 
             this.TouchUp();
             this.EndTouchData();
 
-            BotApplication.Wait(1000);
+            BotApplication.Wait(waitms);
         }
 
         public void Swipe(Location downAt, Location from, Location to, int steps, bool touchUpAtTouchDownLocation)

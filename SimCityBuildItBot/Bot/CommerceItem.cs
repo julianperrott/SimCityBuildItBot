@@ -11,6 +11,7 @@
         Donut,
         Chair,
         Nails,
+        TreeSapling,
         Grass,
         GardenFurniture,
         FlourBag,
@@ -20,8 +21,8 @@
         IceCreamSandwich,
         GreenSmoothie,
         Table,
-        BBQGrill
-
+        BBQGrill,
+        BreadRoll
     }
 
     public class CommerceItemBuild
@@ -85,6 +86,11 @@
                     Bot.FactoryResource.Ignore,
                     Bot.FactoryResource.Ignore
                 }),
+                new CommerceItemBuild(CommerceItem.BreadRoll,Building.DonutShop, Bot.Location.ButtonLeftInner3, new List<Bot.FactoryResource>()
+                {
+                    Bot.FactoryResource.Ignore,
+                    Bot.FactoryResource.Ignore
+                }),
                 new CommerceItemBuild(CommerceItem.Chair,Building.FurnitureStore, Bot.Location.ButtonLeftInner1,  new List<Bot.FactoryResource>()
                 {
                     Bot.FactoryResource.Wood,
@@ -102,6 +108,11 @@
                     Bot.FactoryResource.Metal
                 }),
                 new CommerceItemBuild(CommerceItem.Grass,Building.GardeningSupplies, Bot.Location.ButtonLeftInner1,  new List<Bot.FactoryResource>()
+                {
+                    Bot.FactoryResource.Seeds,
+                    Bot.FactoryResource.Ignore,
+                }),
+                new CommerceItemBuild(CommerceItem.TreeSapling,Building.GardeningSupplies, Bot.Location.ButtonLeftInner2,  new List<Bot.FactoryResource>()
                 {
                     Bot.FactoryResource.Seeds,
                     Bot.FactoryResource.Ignore,

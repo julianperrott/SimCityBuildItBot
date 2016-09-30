@@ -65,7 +65,6 @@
             this.tb7 = new System.Windows.Forms.TextBox();
             this.tb8 = new System.Windows.Forms.TextBox();
             this.btnClickPanelTrade = new System.Windows.Forms.Button();
-            this.cbDebug = new System.Windows.Forms.CheckBox();
             this.txtLog = new System.Windows.Forms.TextBox();
             this.bntCollectSales = new System.Windows.Forms.Button();
             this.btnMakeSale = new System.Windows.Forms.Button();
@@ -75,6 +74,7 @@
             this.btnCaptureGlobalTrade = new System.Windows.Forms.Button();
             this.btnIsHomeButtonVisible = new System.Windows.Forms.Button();
             this.btnIsOfflineButtonVisible = new System.Windows.Forms.Button();
+            this.btnToggle = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb1)).BeginInit();
@@ -120,9 +120,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxAll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBoxAll.Location = new System.Drawing.Point(12, 299);
+            this.pictureBoxAll.Location = new System.Drawing.Point(15, 286);
             this.pictureBoxAll.Name = "pictureBoxAll";
-            this.pictureBoxAll.Size = new System.Drawing.Size(1358, 414);
+            this.pictureBoxAll.Size = new System.Drawing.Size(1180, 1000);
             this.pictureBoxAll.TabIndex = 10;
             this.pictureBoxAll.TabStop = false;
             // 
@@ -409,16 +409,6 @@
             this.btnClickPanelTrade.UseVisualStyleBackColor = true;
             this.btnClickPanelTrade.Click += new System.EventHandler(this.btnClickPanelTrade_Click);
             // 
-            // cbDebug
-            // 
-            this.cbDebug.AutoSize = true;
-            this.cbDebug.Location = new System.Drawing.Point(15, 15);
-            this.cbDebug.Name = "cbDebug";
-            this.cbDebug.Size = new System.Drawing.Size(58, 17);
-            this.cbDebug.TabIndex = 43;
-            this.cbDebug.Text = "Debug";
-            this.cbDebug.UseVisualStyleBackColor = true;
-            // 
             // txtLog
             // 
             this.txtLog.Location = new System.Drawing.Point(959, 154);
@@ -507,11 +497,22 @@
             this.btnIsOfflineButtonVisible.UseVisualStyleBackColor = true;
             this.btnIsOfflineButtonVisible.Click += new System.EventHandler(this.btnIsOfflineButtonVisible_Click);
             // 
+            // btnToggle
+            // 
+            this.btnToggle.Location = new System.Drawing.Point(1202, 286);
+            this.btnToggle.Name = "btnToggle";
+            this.btnToggle.Size = new System.Drawing.Size(75, 36);
+            this.btnToggle.TabIndex = 53;
+            this.btnToggle.Text = "Toggle Position";
+            this.btnToggle.UseVisualStyleBackColor = true;
+            this.btnToggle.Click += new System.EventHandler(this.btnToggle_Click);
+            // 
             // TradeDepot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1382, 725);
+            this.Controls.Add(this.btnToggle);
             this.Controls.Add(this.btnIsOfflineButtonVisible);
             this.Controls.Add(this.btnIsHomeButtonVisible);
             this.Controls.Add(this.btnCaptureGlobalTrade);
@@ -521,7 +522,6 @@
             this.Controls.Add(this.btnMakeSale);
             this.Controls.Add(this.bntCollectSales);
             this.Controls.Add(this.txtLog);
-            this.Controls.Add(this.cbDebug);
             this.Controls.Add(this.btnClickPanelTrade);
             this.Controls.Add(this.tb8);
             this.Controls.Add(this.tb7);
@@ -610,7 +610,6 @@
         private System.Windows.Forms.TextBox tb7;
         private System.Windows.Forms.TextBox tb8;
         private System.Windows.Forms.Button btnClickPanelTrade;
-        private System.Windows.Forms.CheckBox cbDebug;
         private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.Button bntCollectSales;
         private System.Windows.Forms.Button btnMakeSale;
@@ -620,5 +619,6 @@
         private System.Windows.Forms.Button btnCaptureGlobalTrade;
         private System.Windows.Forms.Button btnIsHomeButtonVisible;
         private System.Windows.Forms.Button btnIsOfflineButtonVisible;
+        private System.Windows.Forms.Button btnToggle;
     }
 }

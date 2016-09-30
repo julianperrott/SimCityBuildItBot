@@ -173,7 +173,7 @@
                     try
                     {
                         var p = new PanelLocation { Start = new Point(startX + col * 270, startY + row * 172), Row = row, Column = col };
-                        p.CroppedImage = cropImage(image, new Rectangle(p.Start, new Size(60, 80)));
+                        p.CroppedImage = cropImage(image, new Rectangle(p.Start, p.ImageGlobalTradeSize));
                         locs.Add(p);
                     }
                     catch
