@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimCityBuildItBot.ImageHashing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace SimCityBuildItBot
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new BotForm());
-             //Application.Run(new TradeDepot());
+            //Application.Run(new TradeDepot());
             //Application.Run(new ShoppingListsForm());
             //Application.Run(new TestForm());
         }

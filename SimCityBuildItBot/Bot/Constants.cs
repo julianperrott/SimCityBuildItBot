@@ -26,8 +26,12 @@
                 case Location.ButtonRightInner2: return new Point(1390, 500);
                 case Location.ButtonRightInner3: return new Point(1280, 680);
 
-                case Location.ProductionQueue: return new Point(525, 972);
-                case Location.ProductionQueueL8: return new Point(720, 972);
+                //case Location.ProductionQueue: return new Point(525, 972);
+                //case Location.ProductionQueueL8: return new Point(720, 972);
+
+                case Location.ProductionQueue: return new Point(960, 500);
+                case Location.ProductionQueueL8: return new Point(960, 500);
+
                 case Location.FactoryQueuePositionStart: return new Point(456, 944);
                 case Location.FactoryQueuePositionend: return new Point(1471, 932);
 

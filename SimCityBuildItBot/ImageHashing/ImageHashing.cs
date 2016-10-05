@@ -81,8 +81,12 @@
             // 1 = higher than average, 0 = lower than average
             ulong hash = 0;
             for (int i = 0; i < 64; i++)
+            {
                 if (grayscale[i] >= averageValue)
+                {
                     hash |= (1UL << (63 - i));
+                }
+            }
 
             return hash;
         }

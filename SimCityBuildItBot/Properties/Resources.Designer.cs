@@ -59,5 +59,15 @@ namespace SimCityBuildItBot.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _179889_Papel_de_Parede_Super_Homem__179889_1600x1200 {
+            get {
+                object obj = ResourceManager.GetObject("179889_Papel-de-Parede-Super-Homem--179889_1600x1200", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

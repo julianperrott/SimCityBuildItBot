@@ -147,3 +147,4 @@ C:\F drive\GitHub\SimCityBuildItBot\SimCityBuildItBot\obj\Debug\SimCityBuildItBo
 C:\F drive\GitHub\SimCityBuildItBot\SimCityBuildItBot\obj\Debug\SimCityBuildItBot.BuyForm.resources
 C:\F drive\GitHub\SimCityBuildItBot\SimCityBuildItBot\obj\Debug\SimCityBuildItBot.TradeDepot.resources
 C:\F drive\GitHub\SimCityBuildItBot\SimCityBuildItBot\obj\Debug\SimCityBuildItBot.csproj.GenerateResource.Cache
+F:\GitHub\SimCityBuildItBot\SimCityBuildItBot\obj\Debug\SimCityBuildItBot.ImageHashing.HashingDemoForm.resources
