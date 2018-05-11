@@ -29,6 +29,7 @@ The basic iterations between the bot and the game are:
 ### Bot Demo
 
 [YouTube Video](https://www.youtube.com/watch?v=OOk6HWBdy6U)
+[YouTube Video 2](https://www.youtube.com/watch?v=JFwONo9b-RE)
 
 ----------
 
@@ -74,6 +75,7 @@ Next I tackle buying from "Global Trade" and Selling crafted items to generate i
 The main new problem I had to solve was recognising images from the game screen. This was solved using perceptual hashing with a dictionary of categorised image hashes.
 
 <br/>
+
 ### 2. Buying Items
 
 Assuming we have a shopping list of items we need, then the goal is to buy those items.
@@ -85,6 +87,7 @@ Clicking on the Global trade building brings up the trade window. The window con
 Usefully each panel is the same size, so If we can find where a panel starts, then the item will always be in the same place and all we need to do is to recognise the item in the panel. The way I solved this is described below:
 
 <br/>
+
 #### Finding Panels
 
 The tops of the panels are always the same distance from the top of the screen. 
@@ -95,6 +98,7 @@ Each continuous block of matching pixels is one panel. The first pixel in each l
 ![Panels](/post/img/SB2_2_Global Trade.png)
 
 <br/>
+
 #### Recognising the item in the panel
 
 If we image capture a rectangle a fixed distance from the top left of the panel of a set size, we now have an image which can be processed and recognised using Image hashing.
@@ -110,6 +114,7 @@ As each image is processed  a hash is created e.g. 70088502915571468. The file i
 Once we've recognised an item that we want to buy, we then click on the panel and are transported to the trade depot of the city who is selling the item.
 
 <br/>
+
 #### Buying the item
 
 Once you are at the city selling the item, you usually find many other items for sale.
@@ -119,6 +124,7 @@ The trade depot is similar to the global trade except that it has boxes instead 
 ![Trade Depot](/post/img/SB2_5_TradeDepot.png)
 
 <br/>
+
 ### 3. Selling items
 
 We have a trade depot where we can sell items. It contains a number of boxes each of which can contain a single item for sale. Once we click on an empty box a "Create Sale" dialog is shown.
@@ -143,6 +149,7 @@ Steps 2, 3 & 5 use the same image matching technique used when buying items.
 
 
 <br/>
+
 ### 4. What is Perceptual Hashing
 
 > A perceptual hash is a fingerprint of a multimedia file derived from various features from its content. Unlike cryptographic hash functions which rely on the avalanche effect of small changes in input leading to drastic changes in output, 
