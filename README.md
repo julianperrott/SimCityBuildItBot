@@ -82,7 +82,7 @@ Assuming we have a shopping list of items we need, then the goal is to buy those
 
 Clicking on the Global trade building brings up the trade window. The window contains a number of panels, each representing an item for sale. Dragging within the list from right to left reveals more items.
 
-![Global Trade HQ](/post/img/SB2_1_Global Trade.png)
+![Global Trade HQ]("/post/img/SB2_1_Global Trade.png")
 
 Usefully each panel is the same size, so If we can find where a panel starts, then the item will always be in the same place and all we need to do is to recognise the item in the panel. The way I solved this is described below:
 
@@ -95,7 +95,7 @@ Finding the tops of the panels required looking along this line for pixels close
 
 Each continuous block of matching pixels is one panel. The first pixel in each line represents the top left of the panel. 
 
-![Panels](/post/img/SB2_2_Global Trade.png)
+![Panels]("/post/img/SB2_2_Global Trade.png")
 
 <br/>
 
