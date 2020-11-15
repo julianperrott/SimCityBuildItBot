@@ -1,3 +1,7 @@
+_Note: This repo is old and not maintained, it may give you ideas, but don't expect more than a proof of concept._
+
+----------
+
 When a task is repetitive, why would we want to do it ourselves, if someone or something else could do it equally well or better? Computers are really good at doing repetitive tasks because they are accurate, don’t get bored, complain or need to be paid. Tasks which run within a system are the easiest and cheapest to automate, others can be cost effective if there is enough benefit. For example robots on a factory production line, automated driving or flying an aircraft. 
 
 ----------
